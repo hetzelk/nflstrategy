@@ -21,10 +21,19 @@ play81:"L16,L13,L10f", play82:"C14,L12,L10f", play83:"C10f,L8,L6", play84:"L82,L
 play91:"L16,L13,L10f", play92:"C14,L12,L10f", play93:"C10f,L8,L6", play94:"L82,L40,L32", play95:"L30,L22,L15", play96:"C33,L27,L20f", play97:"L91,L47,L2f"}
 };
 
+var UITesting = {
+    id:"UITesting",
+    name:"UI Testing",
+    type:"Test", 
+    desc:"Test desc", 
+    plays: { 
+    play11:"L0,C50,R-11", play12:"L-20i,C15i,R-15i", play13:"L20f,C-15f,R15f", play14:"L-20i,C15f,R-15i", play15:"L20f,C-15i,R15f"}
+};
+
 
 
 //must put the offense(and defense) in order of type
-var offense = [Sweep28];
+var offense = [Sweep28,UITesting];
 
 /*
 console.log(offense[1].type);

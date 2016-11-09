@@ -88,6 +88,16 @@ var UnderKeyDouble = {
 
 
 
+var defenseTesting = {
+    id:"defenseTesting",
+    name:"defenseTesting",
+    type:"TEST", 
+    desc:"test", 
+    zones:"11,12,13,14,15"
+};
 
 
-var defense = [PlugWeakZone34,OverKeyStrongZone,TwistStrongZone43,MaxBlitz43,SamWillBlitz43,SamWillBlitz43,BlastManToMan43,KeyManToMan43,KeyMombo34,KeySafetyXCombo42,NickelPrevent34,UnderKeyDouble]
+
+
+
+var defense = [defenseTesting,PlugWeakZone34,OverKeyStrongZone,TwistStrongZone43,MaxBlitz43,SamWillBlitz43,SamWillBlitz43,BlastManToMan43,KeyManToMan43,KeyMombo34,KeySafetyXCombo42,NickelPrevent34,UnderKeyDouble]
