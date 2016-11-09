@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon-drop.png">
+
+    <title>NFL Strategy</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/stylesheet.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+      <button type="button" class="navbar-toggler hidden-sm-up" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation"></button>
+      <a class="navbar-brand" href="#">NFL Strategy</a>
+      <div id="navbar">
+        <nav class="nav navbar-nav float-xs-left">
+          <a class="nav-item nav-link" href="#">Game</a>
+          <a class="nav-item nav-link" href="#">Settings</a>
+          <a class="nav-item nav-link" href="#">Profile</a>
+          <a class="nav-item nav-link" href="#">Help</a>
+        </nav>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="index.html">Game</span></a></li>
+            <li><a href="#">Stats</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Offense Help</a></li>
+            <li><a href="">Defense Help</a></li>
+            <li><a href="">Hints</a></li>
+            <li><a href="">Help</a></li>
+            <li class="active"><a href="#">Offense Creator</span></a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+          <h1>Offense Creation Helper</h1>
+          <br>
+          <select id="offense-row-select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select>
+          <br>
+          <div class="row create-offense1">
+            <div class="col-md-3"> 
+              <button class="btn first-hash-buttons blue-btn" id="left-hash1">B</button>
+              <button class="btn first-hash-buttons red-btn" id="center-hash1">R</button>
+              <button class="btn first-hash-buttons black-btn" id="right-hash1">B</button>
+            </div>
+            <div class="col-md-3">
+              <input type="text" id="yardage1">
+            </div>
+            <div class="col-md-3"> 
+              <button class="btn nuetral-btn" id="nuetral-btn1">_</button>
+              <button class="btn fumble-btn" id="fumble-btn1">F</button>
+              <button class="btn interception-btn" id="interception-btn1">I</button>
+            </div>
+            <div class="col-md-3"> 
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="row create-offense2">
+            <div class="col-md-3"> 
+              <button class="btn hash-buttons blue-btn" id="left-hash2">B</button>
+              <button class="btn hash-buttons red-btn" id="center-hash2">R</button>
+              <button class="btn hash-buttons black-btn" id="right-hash2">B</button>
+            </div>
+            <div class="col-md-3">
+              <input type="text" id="yardage2">
+            </div>
+            <div class="col-md-3"> 
+              <button class="btn nuetral-btn" id="nuetral-btn2">_</button>
+              <button class="btn fumble-btn" id="fumble-btn2">F</button>
+              <button class="btn interception-btn" id="interception-btn2">I</button>
+            </div>
+            <div class="col-md-3"> 
+              <br>
+              <br>
+            </div>
+          </div>
+
+          <div class="row create-offense3">
+            <div class="col-md-3"> 
+              <button class="btn hash-buttons blue-btn" id="left-hash3">B</button>
+              <button class="btn hash-buttons red-btn" id="center-hash3">R</button>
+              <button class="btn hash-buttons black-btn" id="right-hash3">B</button>
+            </div>
+            <div class="col-md-3">
+              <input type="text" id="yardage3">
+            </div>
+            <div class="col-md-3"> 
+              <button class="btn nuetral-btn" id="nuetral-btn3">_</button>
+              <button class="btn fumble-btn" id="fumble-btn3">F</button>
+              <button class="btn interception-btn" id="interception-btn3">I</button>
+            </div>
+            <div class="col-md-3"> 
+              <div><button class="btn btn-success" id="next-group">Next</button></div><br>
+            </div>
+          </div>
+
+          <div class="row display-offense-creation">
+            <div class="col-md-12">
+              <p id="display-current-text">current</p>
+              <p id="display-offense-text">all</p>
+              <br>
+              <p><b>Example:</b></p>
+              <p>play11:"C20,L15,L15", play12:"C7,L5,L4", play13:"C15,L17,L12", play14:"C-4,L-4,L-3", play15:"C9,L8,L7", play16:"C10,L8,L6", play17:"C8,L6,L4",</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/offense-creator.js"></script>
+
+    <script type="text/javascript">
+    //eventually remove this, these are settings so I can page refresh and reset settings as I need be
+/*
+    localStorage.setItem("setupGame", "block");
+    localStorage.setItem("nextPlay", "none");
+    $("#setup-game").css("display", localStorage.getItem("setupGame"));
+    $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    */
+    </script>
+  </body>
+</html>

@@ -112,3 +112,33 @@ body {
 #secondary-coin-settings{
   display: none;
 }
+
+/*
+this is only for my offense creator
+*/
+#offense-row-select{
+  margin-bottom: 10px;
+  width: 50px;
+}
+
+.blue-btn{
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+}
+.red-btn{
+  background-color: red;
+  font-weight: bold;
+}
+.black-btn{
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+.fumble-btn{
+  background-color: brown;
+  font-weight: bold;
+}
+.interception-btn{
+  font-weight: bold;
+}
