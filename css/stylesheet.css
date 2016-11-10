@@ -142,3 +142,124 @@ this is only for my offense creator
 .interception-btn{
   font-weight: bold;
 }
+
+.oneTenth{
+  background-color: green; 
+  height: 150px;
+  border-right: 2px solid white;
+  border-left: 2px solid white; 
+}
+
+.oneTenthCenter{
+  background-color: green; 
+  height: 75px;
+  border-top: 2px dashed white;
+  border-bottom: 2px dashed white; 
+  border-right: 2px solid white;
+  border-left: 2px solid white; 
+}
+
+.oneTenthCenterRightEnd{
+  background-color: green; 
+  height: 75px;
+  border-right: 2px solid white;
+  border-left: 2px solid white; 
+}
+
+.oneTenthCenterLeftEnd{
+  background-color: green; 
+  height: 75px;
+  border-right: 2px solid white;
+  border-left: 2px solid white; 
+}
+
+.fieldOutline{
+  border: 10px solid white;
+  outline: 5px solid black;
+}
+
+.fieldNumberRight{
+  color: white;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 15px -10px 0 0;
+}
+
+.fieldNumberLeft{
+  color: white;
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 15px 0 0 -10px;
+}
+
+.fieldNumberRightB{
+  color: white;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 105px -10px 0 0;
+
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+
+.fieldNumberLeftB{
+  color: white;
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 105px 0 0 -10px;
+
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+
+#leftEndzone{
+  font-size: 50px;
+  font-weight: bold;
+
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  margin: 145px 0 0 -130px;
+  height: 80px;
+  width: 350px;
+  z-index: 99;
+
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+#rightEndzone{
+  font-size: 50px;
+  font-weight: bold;
+
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin: 145px -130px 0 0;
+  height: 80px;
+  width: 350px;
+  z-index: 99;
+
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+.text-center{
+  text-align: center;
+}

@@ -96,19 +96,19 @@ function randomBead (playType) {
 
     if(playType == "regular"){
         if(bead <= 40){
-            return 0;
+            return 4;
         }
         else if (bead <= 45){
-            return 1;
+            return 3;
         }
         else if (bead <= 70){
             return 2;
         }
         else if (bead <= 80){
-            return 3;
+            return 1;
         }
         else{
-            return 4;
+            return 0;
         }
     }
 

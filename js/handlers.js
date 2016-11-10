@@ -67,11 +67,22 @@ $("#coin-flip-button").click(function() {
 });
 
 //after flip choices
-$(".kickRecieveChoice").click(function() {
+$("#kick-choice").click(function() {
+  localStorage.setItem("receiveFirst", loser);
+});
+$("#recieve-choice").click(function() {
   localStorage.setItem("receiveFirst", winner);
 });
-$(".leftRightChoice").click(function() {
-  localStorage.setItem("fieldDirection", loser);
+
+$("#left-choice").click(function() {
+  localStorage.setItem("leftDirection", winner);
+  document.getElementById("left-team-name").innerHTML = winner;
+  document.getElementById("right-team-name").innerHTML = loser;
+});
+$("#right-choice").click(function() {
+  localStorage.setItem("leftDirection", loser);
+  document.getElementById("left-team-name").innerHTML = loser;
+  document.getElementById("right-team-name").innerHTML = winner;
 });
 
 $("#coin-flip-close").click(function() {

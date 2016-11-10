@@ -33,7 +33,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Game <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#">Game</a></li>
             <li><a href="#">Stats</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -50,6 +50,8 @@
           <h3>Stats: Play Count:<span id="playCount">0</span></h3>
 
           <button class="btn btn-primary" data-toggle="modal" data-target="#settings-modal" id="setup-game">Setup Game</button>
+          <button class="btn btn-success" data-toggle="modal" data-target="#offense-modal" id="next-play">Start Game</button>
+          <button class="btn btn-danger" id="random-bead"> Random Bead </button>
 
           <!-- Settings modal -->
           <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -154,7 +156,6 @@
           </div>
 
           <!-- Offense modal -->
-          <button class="btn btn-success" data-toggle="modal" data-target="#offense-modal" id="next-play">Start Game</button>
 
           <div class="modal fade" id="offense-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -245,7 +246,68 @@
             </div>
           </div>
 
-          <button class="btn btn-danger" id="random-bead"> Random Bead </button>
+          <div class="col-sm-12 fieldOutline">
+            <div id="leftEndzone" class="text-center"><span id="left-team-name">Home</span></div>
+            <div class="">
+              <div class="row">
+                <div class="col-sm-1 oneTenth"></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberRight">1</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">2</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">3</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">4</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">5</span></div>
+                <div class="center-field"></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">4</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">3</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">2</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span><span class="fieldNumberRight">1</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeft">0</span></div>
+                <div class="col-sm-1 oneTenth"></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-1 oneTenthCenterLeftEnd"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="center-field"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenter"></div>
+                <div class="col-sm-1 oneTenthCenterRightEnd"></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-1 oneTenth"></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">1</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">2</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">3</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">4</span><span class="fieldNumberRightB">0</span></div>
+                <div class="center-field"></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">5</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">4</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">3</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">2</span><span class="fieldNumberRightB">0</span></div>
+                <div class="col-sm-1 oneTenth"><span class="fieldNumberLeftB">1</span></div>
+                <div class="col-sm-1 oneTenth"></div>
+              </div>
+            </div>
+            <div id="rightEndzone" class="text-center"><span id="right-team-name">Away</span></div>
+          </div>
+
+
+          <div class="col-md-12 none" id="field">
+            <div id="touchdowns">
+              &nbsp;
+              <div class="" id="center-field">
+                <div id="center-stripe"></div>
+              </div>
+              &nbsp;
+            </div>
+          </div>
 
         </div>
       </div>
