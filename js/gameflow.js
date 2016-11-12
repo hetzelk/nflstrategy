@@ -59,8 +59,41 @@ function createDefenseChoices() {
 createOffenseChoices();
 createDefenseChoices();
 
+function setAllPositions(offenseYds, defenseYds, firstYds, fieldGoalYds) {
+    offenseYds = 20; 
+    defenseYds = 30; 
+    firstYds = 30; 
 
+    var tenLeft = Math.ceil($("#tenLeft").position().left);
+    var twentyLeft = Math.ceil($("#twentyLeft").position().left);
+    var thirtyLeft = Math.ceil($("#thirtyLeft").position().left);
+    var fourtyLeft = Math.ceil($("#fourtyLeft").position().left);
+    var fiftyLeft = Math.ceil($("#fiftyLeft").position().left);
+    var fiftyRight = Math.ceil($("#fiftyRight").position().left);
+    var fourtyRight = Math.ceil($("#fourtyRight").position().left);
+    var thirtyRight = Math.ceil($("#thirtyRight").position().left);
+    var twentyRight = Math.ceil($("#twentyRight").position().left);
+    var tenRight = Math.ceil($("#tenRight").position().left);
 
+    console.log(tenLeft);
+    console.log(twentyLeft);
+    console.log(thirtyLeft);
+    console.log(fourtyLeft);
+
+    $('#lineOfScrimmage').css({
+        'left': (tenLeft - 8) + "px"
+    });
+    $('#firstDownPosition').css({
+        'left': (twentyLeft - 8) + "px"
+    });
+}
+
+function getYardPosition(pixels, yard) {
+    //returns the pixel position
+    return 100;
+}
+
+setAllPositions();
 /*
 Game Flow:
 Have another file that can save details, stats, and positions, so page refresh doesn't kill the game

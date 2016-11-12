@@ -263,3 +263,57 @@ this is only for my offense creator
 .text-center{
   text-align: center;
 }
+
+#leftTeamPosition{
+  background-color: red;
+  position: absolute;
+  width: 100px;
+  top: 140px;
+  left: 120px;
+  z-index: 100;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+#rightTeamPosition{
+  background-color: orange;
+  position: absolute;
+  width: 100px;
+  top: 140px;
+  left: 150px;
+  z-index: 100;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+#lineOfScrimmage{
+  background-color: transparent;
+  border-right: 4px solid blue; 
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 75;
+  height: 375px;
+  width: 10px;
+}
+
+#firstDownPosition{
+  background-color: transparent;
+  border-right: 4px solid yellow;
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  z-index: 75;
+  height: 375px;
+  width: 10px;
+}
+
+#fieldGoalPosition{
+
+}
