@@ -21,9 +21,7 @@
       <a class="navbar-brand" href="#">NFL Strategy</a>
       <div id="navbar">
         <nav class="nav navbar-nav float-xs-left">
-          <a class="nav-item nav-link" href="#">Game</a>
-          <a class="nav-item nav-link" href="#">Settings</a>
-          <a class="nav-item nav-link" href="#">Profile</a>
+          <a class="nav-item nav-link" data-toggle="modal" data-target="#settings-modal" id="setup-game-banner" href="#">Settings</a>
           <a class="nav-item nav-link" href="#">Help</a>
           <a class="nav-item nav-link" href="#"> | &nbsp; Made in 1978, Remastered in 2016</a>
         </nav>
@@ -47,55 +45,55 @@
         </div>
         <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2">
               <button class="btn btn-primary" data-toggle="modal" data-target="#settings-modal" id="setup-game">Setup Game</button>
-              <button class="btn btn-success" data-toggle="modal" data-target="#offense-modal" id="next-play">Start Game</button>
+              <button class="btn btn-success none" data-toggle="modal" data-target="#offense-modal" id="next-play">Kick Off</button>
+            </div>
+            <div class="col-md-8 squarefont" id="scoreboard">
+              <div class="row">
+                <div class="col-md-3 text-left"><span id="scoreboard-away">AWAY</span><br>
+                  <span id="scoreboard-away-score">0</span><span id="scoreboard-away-ball">F</span>
+                </div>
+                <div class="col-md-6 text-center">
+                  <div id="scoreboard-time"><span id="scoreboard-time-value">15:00</span></div>
+                  <div>
+                    <div class="col-md-4 text-center" id="scoreboard-away-tol"><span id="scoreboard-t1-tol-value">3</span> TOL</div>
+                    <div class="col-md-4 text-center" id="scoreboard-quarter">QTR: <span id="scoreboard-qtr-value">1</span></div>
+                    <div class="col-md-4 text-center" id="scoreboard-home-tol">TOL <span id="scoreboard-t2-tol-value">3</span></div>
+                  </div>
+                </div>
+                <div class="col-md-3 text-right"><span id="scoreboard-home">HOME</span><br>
+                  <span id="scoreboard-home-ball"></span><span id="scoreboard-home-score">0</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 text-left" id="scoreboard-down"><span id="scoreboard-down-value">-</span> DOWN</div>
+                <div class="col-md-4 text-center" id="scoreboard-togo"><span id="scoreboard-togo-value">-</span> TO GO</div>
+                <div class="col-md-4 text-right" id="scoreboard-ballon">BALL ON <span id="scoreboard-ballon-value">50</span></div>
+              </div>
+            </div>
+            <div class="col-md-2">
               <button class="btn btn-danger" id="random-bead"> Random Bead </button>
-            </div>
-            <div class="col-md-6" id="scoreboard">
-              <div class="row">
-                <div class="col-md-4 text-left">HOME</div>
-                <div class="col-md-4 text-center">15:00</div>
-                <div class="col-md-4 text-right">AWAY</div>
-              </div>
-              <div class="row">
-                <div class="col-md-3 text-left">7</div>
-                <div class="col-md-2 text-center">3 TOL</div>
-                <div class="col-md-2 text-center">QTR: 4</div>
-                <div class="col-md-2 text-center">TOL 3</div>
-                <div class="col-md-3 text-right">14</div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 text-left">3 DOWN</div>
-                <div class="col-md-4 text-center">10 TO GO</div>
-                <div class="col-md-4 text-right">BALL ON 20</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <img src="scoreboard.jpg" class="img-fluid">
             </div>
           </div>
 
           <!-- Settings modal -->
-          <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title" id="myModalLabel">Game Settings</h4>
+                  <h4 class="modal-title" id="settingsModalLabel">Game Settings</h4>
                 </div>
                 <div class="modal-body settings-body">
                   <div class="row">
                     <div class="col-md-6">
-                      <span>Team 1 Name: </span>
+                      <span>Home Name: </span>
                       <input type="text" id="team-x-name">
                       <br>
-                      <span><span id="team-1-name">Team 1</span> Color: </span>
+                      <span><span id="team-1-name">Home</span> Color: </span>
                       <select class="color-select" id="team-x-color">
                         <option></option>
                         <option value="red">Red</option>
@@ -106,10 +104,10 @@
                     </div>
 
                     <div class="col-md-6">
-                      <span>Team 2 Name: </span>
+                      <span>Away Name: </span>
                       <input type="text" id="team-y-name">
                       <br>
-                      <span><span id="team-2-name">Team 2</span> Color: </span>
+                      <span><span id="team-2-name">Away</span> Color: </span>
                       <select class="color-select" id="team-y-color">
                         <option></option>
                         <option value="red">Red</option>
@@ -123,6 +121,13 @@
                   <br>
                   <div>
                     <h3>Special Game Options</h3>
+                      <span id="">Length of game (quarters) </span>
+                      <select class="length-select" id="quarter-length-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </select>
                     <br>
                     <input id="audible-checkbox" type="checkbox"><span> Audible Option</span>
                     <br>
@@ -131,6 +136,7 @@
 
                 </div>
                 <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" id="clear-all" data-dismiss="modal">Clear Settings</button>
                   <button type="button" class="btn btn-success" id="save-settings" data-toggle="modal" data-target="#coin-flip-modal" data-dismiss="modal" >Save Settings</button>
                 </div>
               </div>
@@ -138,14 +144,14 @@
           </div>
 
           <!-- Coin Flip modal -->
-          <div class="modal fade" id="coin-flip-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="coin-flip-modal" tabindex="-1" role="dialog" aria-labelledby="coinFlipLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title" id="myModalLabel">Coin Flips</h4>
+                  <h4 class="modal-title" id="coinFlipLabel">Coin Flips</h4>
                 </div>
                 <div class="modal-body settings-body">
 
@@ -165,7 +171,7 @@
                         <button type="button" class="btn btn-info kickRecieveChoice" id="recieve-choice">Recieve</button>
                       </div>
                       <br>
-                      <p><b><span id="team-left-right">Team Y</span></b> would you like to start right or left?</p>
+                      <p><b><span id="team-left-right">Team Y</span></b> what direcetion would you like to start in? Right or Left?</p>
                       <div class="left-right-buttons">
                         <button type="button" class="btn btn-info leftRightChoice" id="right-choice">Right</button>
                         <button type="button" class="btn btn-info leftRightChoice" id="left-choice">Left</button>
@@ -183,14 +189,14 @@
 
           <!-- Offense modal -->
 
-          <div class="modal fade" id="offense-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="offense-modal" tabindex="-1" role="dialog" aria-labelledby="offenseModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title" id="myModalLabel">Offense Play Choice</h4>
+                  <h4 class="modal-title" id="offenseModalLabel">Offense Play Choice</h4>
                 </div>
                 <div class="modal-body">
                   <div class="row">
@@ -220,14 +226,14 @@
           </div>
 
           <!-- Defense modal -->
-          <div class="modal fade" id="defense-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="defense-modal" tabindex="-1" role="dialog" aria-labelledby="defenseModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title" id="myModalLabel">Defense Play Choice</h4>
+                  <h4 class="modal-title" id="defenseModalLabel">Defense Play Choice</h4>
                 </div>
                 <div class="modal-body">
                   <div class="row">
@@ -236,6 +242,27 @@
                         <button type="button" id="defense-select" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Defense
                         </button>
+                        <br>
+                        <select size="10" class="select-box">
+                         <option class="select-hover">1afasasdasdasdasds</option>
+                         <option class="select-hover">2</option>
+                         <option class="select-hover">3</option>
+                         <option class="select-hover">4</option>
+                         <option>5</option>
+                         <option class="select-hover">6</option>
+                         <option>3</option>
+                         <option class="select-hover">4</option>
+                         <option>5</option>
+                         <option>6</option>
+                         <option>3</option>
+                         <option>4</option>
+                         <option>5</option>
+                         <option>6</option>
+                         <option>3</option>
+                         <option>4</option>
+                         <option>5</option>
+                         <option>6</option>
+                        </select>
                         <div class="dropdown-menu" id="defense-dropdown-menu">
                         </div>
                       </div>

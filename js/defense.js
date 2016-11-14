@@ -86,6 +86,29 @@ var UnderKeyDouble = {
     zones:"17,31,47,66,84"
 };
 
+var PuntReturn = {
+    id:"PuntReturn",
+    name:"Punt Return",
+    type:"Kick", 
+    desc:"Add a variation to try and get to a side of the field?", 
+    zones:"11,12,13,14,15"
+};
+
+var FGBlock = {
+    id:"FGBlock",
+    name:"Field Goal Block",
+    type:"Kick", 
+    desc:"Add a variation to try and block the kick and possibly take a penalty", 
+    zones:"11,12,13,14,15"
+};
+
+var KickReturn = {
+    id:"KickReturn",
+    name:"Kick Return",
+    type:"Kick", 
+    desc:"Add a variation to try and get to a side of the field? Add a onside kick cover that will gaurd against an onside kick better, but a regular kick will hurt them more. So if its a false onside kick, the recieving team will be tackled sooner. But if it's an unprepared onside kick, the kicking team has a higher chance of succeeding.", 
+    zones:"11,12,13,14,15"
+};
 
 
 var defenseTesting = {
@@ -100,4 +123,4 @@ var defenseTesting = {
 
 
 
-var defense = [defenseTesting,PlugWeakZone34,OverKeyStrongZone,TwistStrongZone43,MaxBlitz43,SamWillBlitz43,SamWillBlitz43,BlastManToMan43,KeyManToMan43,KeyMombo34,KeySafetyXCombo42,NickelPrevent34,UnderKeyDouble]
+var defense = [defenseTesting,PlugWeakZone34,OverKeyStrongZone,TwistStrongZone43,MaxBlitz43,SamWillBlitz43,SamWillBlitz43,BlastManToMan43,KeyManToMan43,KeyMombo34,KeySafetyXCombo42,NickelPrevent34,UnderKeyDouble,PuntReturn,FGBlock,KickReturn]

@@ -51,13 +51,11 @@ $(".defense-choice").click(function() {
     $("#defense-continue").removeClass("disabled");
     $("#offense-called").removeClass("none");
     $("#defense-called").removeClass("none");
-    playCount++;
-    document.getElementById("playCount").innerHTML = playCount;
     localStorage.setItem("defensePlay", result.id);
+    document.getElementById("next-play").innerHTML = "Next Play";
 });
 
 $("#next-play").click(function() {
-    document.getElementById("next-play").innerHTML = "Next Play";
     document.getElementById("offense-select").innerHTML = "Offense";
     document.getElementById("defense-select").innerHTML = "Defense";
     $("#offense-called").addClass("none");

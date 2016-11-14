@@ -316,10 +316,115 @@ this is only for my offense creator
 
 }
 
+@font-face {
+    font-family: squarefont;
+    src: url(Square.ttf);
+}
+.squarefont{
+    font-family: squarefont;
+}
+
+@font-face {
+    font-family: sportsballs;
+    src: url(Sportz.ttf);
+}
+.sportsballs{
+    font-family: sportsballs;
+}
+
 #scoreboard{
-  border: 3px solid white;
-  outline: 2px solid black;
-  border-radius: 10px;
+  border-radius: 15px;
   background-color: black;
   color: white;
+  margin-bottom: 15px;
+}
+
+#scoreboard-away{
+  font-size: 2.5em;
+}
+#scoreboard-home{
+  font-size: 2.5em;
+}
+#scoreboard-time{
+  font-size: 3em;
+  color: yellow;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  border-right: 3px solid white;
+  padding: 0;
+}
+#scoreboard-away-score{
+  font-size: 3em;
+  color: yellow;
+}
+#scoreboard-home-score{
+  font-size: 3em;
+  color: yellow;
+}
+#scoreboard-away-tol{
+  font-size: 1.3em;
+  color: white;
+}
+#scoreboard-t1-tol-value{
+  font-size: 1.3em;
+  color: yellow;
+}
+#scoreboard-home-tol{
+  font-size: 1.3em;
+  color: white;
+}
+#scoreboard-t2-tol-value{
+  font-size: 1.3em;
+  color: yellow;
+}
+#scoreboard-quarter{
+  font-size: 1.3em;
+  color: white;
+}
+#scoreboard-qtr-value{
+  font-size: 1.3em;
+  color: yellow;
+}
+#scoreboard-down{
+  font-size: 1.7em;
+  color: white;
+}
+#scoreboard-down-value{
+  font-size: 1.7em;
+  color: yellow;
+}
+#scoreboard-togo{
+  font-size: 1.7em;
+  color: white;
+}
+#scoreboard-togo-value{
+  font-size: 1.7em;
+  color: yellow;
+}
+#scoreboard-ballon{
+  font-size: 1.7em;
+  color: white;
+}
+#scoreboard-ballon-value{
+  font-size: 1.7em;
+  color: yellow;
+}
+#scoreboard-away-ball{
+    font-family: sportsballs;
+    font-size: 2em;
+    padding-left: 40px;
+}
+#scoreboard-home-ball{
+    font-family: sportsballs;
+    font-size: 2em;
+    padding-right: 40px;
+}
+
+.select-box{
+  width:20%;
+  font-size:1.2em;
+}
+
+.select-hover:hover{
+  background-color:black;
 }

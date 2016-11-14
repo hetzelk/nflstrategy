@@ -1,17 +1,31 @@
 function setAllIfPossible() {
-    var teamLeftName = localStorage.getItem("team1name");
-    var teamRightName = localStorage.getItem("team2name");
-    var leftDirection = localStorage.getItem("leftDirection");
-    var receiveFirst = localStorage.getItem("receiveFirst");
-    setTouchDowns();
-    if(teamLeftName && teamRightName){
-
+    if(localStorage.getItem("setupGame") !== "none"){
+        setAllPositions(50, 50, "C");
+        return;
+    }
+    else{
+        var teamLeftName = localStorage.getItem("team1name");
+        var teamRightName = localStorage.getItem("team2name");
+        var leftDirection = localStorage.getItem("leftDirection");
+        var receiveFirst = localStorage.getItem("receiveFirst");
+        setTouchDowns(); 
+        setupField(); 
     }
 }
 
-setAllIfPossible();
+function setupField() {
+  //get current field positions from localStorage
+  var fieldPositions = localStorage.getItem("fieldPositions");
+  fieldPositions = fieldPositions.split(",");
+  var offensePos = fieldPositions[0];
+  var firstDownPos = fieldPositions[1];
+  var hashPos = fieldPositions[2];
+  
+  //var poss = fieldPositions[3];
+  setAllPositions(parseInt(offensePos),parseInt(firstDownPos),hashPos);
+}
 
-var playCount = 0;
+setAllIfPossible();
 
 var divider = "<div class=\"dropdown-divider\"></div>";
 
@@ -72,9 +86,14 @@ function createDefenseChoices() {
 createOffenseChoices();
 createDefenseChoices();
 
-function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
+function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds, playType) {
+    if(playType == "kickoff"){
+
+    }
+
     var tenLeft = Math.ceil($("#tenLeft").position().left);
     var twentyLeft = Math.ceil($("#twentyLeft").position().left);
+    /*not really needed 
     var thirtyLeft = Math.ceil($("#thirtyLeft").position().left);
     var fourtyLeft = Math.ceil($("#fourtyLeft").position().left);
     var fiftyLeft = Math.ceil($("#fiftyLeft").position().left);
@@ -82,7 +101,7 @@ function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
     var fourtyRight = Math.ceil($("#fourtyRight").position().left);
     var thirtyRight = Math.ceil($("#thirtyRight").position().left);
     var twentyRight = Math.ceil($("#twentyRight").position().left);
-    var tenRight = Math.ceil($("#tenRight").position().left);
+    var tenRight = Math.ceil($("#tenRight").position().left);*/
 
     var zeroYardLine = tenLeft - 8;
     var hundredYardLine = tenRight + 83;
@@ -92,14 +111,31 @@ function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
     var offensePosition = getYardPosition(zeroYardLine, offenseYds, oneYard);
     var firstDownPosition = getYardPosition(zeroYardLine, firstYds, oneYard);
 
+
+    /*
+
+*****************************************
+Make sure to account for the hashposition depending who is on the top of the screen and the bottom.
+*****************************************
+
+    */
+
     if(hashPosition == "L"){
         hashPosition = 140;
+        /*
+        if(offense going left '''or something){
+            hashPosition = 210;
+        }*/
     }
-    if(hashPosition == "C"){
-        hashPosition = 175;
+    if(hashPosition == "R"){
+        hashPosition = 210;
+        /*
+        if(offense going left '''or something){
+            hashPosition = 140;
+        }*/
     }
     else{
-        hashPosition = 210;
+        hashPosition = 175;
     }
 
     setField(offensePosition, firstDownPosition, hashPosition);
@@ -111,7 +147,7 @@ function getYardPosition(zeroYardLine, yard, oneYard) {
     return position;
 }
 
-function setField(offensePos, firstDownPos, hashPosition) {
+function setField(offensePos, firstDownPos, hashPosition, arguments) {
     $('#lineOfScrimmage').css({
         'left': offensePos + "px"
     });
@@ -119,6 +155,7 @@ function setField(offensePos, firstDownPos, hashPosition) {
         'left': firstDownPos + "px"
     });
 
+    //need to add more logic here based on field direction and the kickoff setup.
     $('#leftTeamPosition').css({
         'left': (offensePos - 58) + "px", 
         'top': hashPosition + "px"
@@ -129,10 +166,28 @@ function setField(offensePos, firstDownPos, hashPosition) {
     });
 }
 
-setAllPositions(20, 30, "C");
+function penalty(penaltyType) {
+    // add some logic that adds some randomeness to it.
+    //it could be a pass play, but there could just be random uneccessary roughness too.
+    if(penaltyType == "Pass"){
+
+    }
+    else if(penaltyType == "Run"){
+
+    }
+    else if(penaltyType == "Kick"){
+
+    }
+    else{
+
+    }
+
+    //down here popup the penalty modal that displays a reason and the number of yards the penalty is.
+    //then add the penalty and correct down to the field logic (2nd down still, -10 yards for offense.)
+}
 /*
 Game Flow:
-Have another file that can save details, stats, and positions, so page refresh doesn't kill the game
+Have localstorage save details, stats, and positions, so page refresh doesn't kill the game
 Game reset clears that saved file.
 
 Setup game button -

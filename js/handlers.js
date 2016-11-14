@@ -1,4 +1,7 @@
-//add a clear all settings/history option to the Help page
+$("#clear-all").click(function() {
+  localStorage.clear();
+  location.reload();
+});
 
 $("#team-x-name").bind('keyup', function(e) {
     var value = $("#team-x-name").val();
@@ -16,6 +19,7 @@ $("#save-settings").click(function() {
   var team1color = $("#team-x-color").val();
   var team2color = $("#team-y-color").val();
 
+  var gameLength = $("#quarter-length-select").val();
   var audible = document.getElementById("audible-checkbox").checked;
   var customPlays = document.getElementById("custom-plays-checkbox").checked;
 
@@ -24,6 +28,7 @@ $("#save-settings").click(function() {
   localStorage.setItem("team1color", team1color);
   localStorage.setItem("team2color", team2color);
   
+  localStorage.setItem("gameLength", gameLength);
   localStorage.setItem("audible", audible);
   localStorage.setItem("customPlays", customPlays);
 });
@@ -35,7 +40,10 @@ function loadSettings() {
     $("#team-y-color").val(localStorage.getItem("team2color"));
     $("#audible-checkbox").prop('checked', localStorage.getItem("audible"));
     $("#custom-plays-checkbox").prop('checked', localStorage.getItem("customPlays"));
-    setTouchDowns();
+
+    $("#setup-game").css("display", localStorage.getItem("setupGame"));
+    $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    setScoreboard();
 }
 loadSettings();
 
@@ -87,9 +95,23 @@ $("#coin-flip-close").click(function() {
   localStorage.setItem("nextPlay", "block");
   $("#setup-game").css("display", localStorage.getItem("setupGame"));
   $("#next-play").css("display", localStorage.getItem("nextPlay"));
+
+  //create base localStorage
+  localStorage.setItem("fieldPositions", "30,40,C");  
+  localStorage.setItem("scoreBoard", "");  
+  localStorage.setItem("time", "15:00");
+  localStorage.setItem("t1tol", "3");
+  localStorage.setItem("t2tol", "3");
+  localStorage.setItem("qtr", "1");
+  localStorage.setItem("down", "1");
+  localStorage.setItem("togo", "10");
+  localStorage.setItem("ballon", "30");
 });
 
 function setTouchDowns() {
+  if(localStorage.getItem("setupGame") !== "none"){
+    return;
+  }
   var team1 = localStorage.getItem("team1name");
   var team2 = localStorage.getItem("team2name");
   var left = localStorage.getItem("leftDirection");
@@ -112,3 +134,29 @@ function setTouchDowns() {
     document.getElementById("right-ball").innerHTML = ""; 
   }
 };
+
+function setScoreboard(){  
+  if(localStorage.getItem("setupGame") !== "none"){
+    return;
+  }
+  document.getElementById("scoreboard-away").innerHTML = localStorage.getItem("team2name");
+  document.getElementById("scoreboard-home").innerHTML = localStorage.getItem("team1name");
+  document.getElementById("scoreboard-time-value").innerHTML = localStorage.getItem("time");
+
+  document.getElementById("scoreboard-t1-tol-value").innerHTML = localStorage.getItem("t1tol");
+  document.getElementById("scoreboard-t2-tol-value").innerHTML = localStorage.getItem("t2tol");
+  document.getElementById("scoreboard-qtr-value").innerHTML = localStorage.getItem("qtr");
+  document.getElementById("scoreboard-down-value").innerHTML = localStorage.getItem("down");
+  document.getElementById("scoreboard-togo-value").innerHTML = localStorage.getItem("togo");
+  document.getElementById("scoreboard-ballon-value").innerHTML = localStorage.getItem("ballon");
+
+  var poss = "away";
+  if(poss == "away"){
+    document.getElementById("scoreboard-away-ball").innerHTML = "F";
+    document.getElementById("scoreboard-home-ball").innerHTML = "";
+  }
+  else{
+    document.getElementById("scoreboard-home-ball").innerHTML = "F";
+    document.getElementById("scoreboard-away-ball").innerHTML = "";
+  }
+}
