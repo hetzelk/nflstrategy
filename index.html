@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon-drop.png">
+    <link rel="icon" href="favicon.ico">
 
     <title>NFL Strategy</title>
 
@@ -25,6 +25,7 @@
           <a class="nav-item nav-link" href="#">Settings</a>
           <a class="nav-item nav-link" href="#">Profile</a>
           <a class="nav-item nav-link" href="#">Help</a>
+          <a class="nav-item nav-link" href="#"> | &nbsp; Made in 1978, Remastered in 2016</a>
         </nav>
       </div>
     </nav>
@@ -45,13 +46,38 @@
           </ul>
         </div>
         <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-          <h1>Welcome to NFL Strategy</h1>
-          <h5> Made in 1978, Remastered in 2016</h5>
-          <h3>Stats: Play Count:<span id="playCount">0</span></h3>
+          <div class="row">
+            <div class="col-md-6">
+              <button class="btn btn-primary" data-toggle="modal" data-target="#settings-modal" id="setup-game">Setup Game</button>
+              <button class="btn btn-success" data-toggle="modal" data-target="#offense-modal" id="next-play">Start Game</button>
+              <button class="btn btn-danger" id="random-bead"> Random Bead </button>
+            </div>
+            <div class="col-md-6" id="scoreboard">
+              <div class="row">
+                <div class="col-md-4 text-left">HOME</div>
+                <div class="col-md-4 text-center">15:00</div>
+                <div class="col-md-4 text-right">AWAY</div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 text-left">7</div>
+                <div class="col-md-2 text-center">3 TOL</div>
+                <div class="col-md-2 text-center">QTR: 4</div>
+                <div class="col-md-2 text-center">TOL 3</div>
+                <div class="col-md-3 text-right">14</div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 text-left">3 DOWN</div>
+                <div class="col-md-4 text-center">10 TO GO</div>
+                <div class="col-md-4 text-right">BALL ON 20</div>
+              </div>
+            </div>
+          </div>
 
-          <button class="btn btn-primary" data-toggle="modal" data-target="#settings-modal" id="setup-game">Setup Game</button>
-          <button class="btn btn-success" data-toggle="modal" data-target="#offense-modal" id="next-play">Start Game</button>
-          <button class="btn btn-danger" id="random-bead"> Random Bead </button>
+          <div class="row">
+            <div class="col-md-4">
+              <img src="scoreboard.jpg" class="img-fluid">
+            </div>
+          </div>
 
           <!-- Settings modal -->
           <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -230,25 +256,9 @@
             </div>
           </div>
 
-          <div class="col-md-12" id="team-plays">
-            <div class="row">
-              <div class="col-md-6">
-                <p id="offense-called" class="none">off</p>
-              </div>
-              <div class="col-md-6">
-                <p id="defense-called" class="none">def</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p id="outcome-display" class="">bead</p>
-              </div>
-            </div>
-          </div>
-
           <div class="col-sm-12 fieldOutline">
-            <div id="leftTeamPosition" class="text-center"><span id="left-team-color"> Home </span><span id="left-ball">o</span></div>
-            <div id="rightTeamPosition" class="text-center"><span id="right-team-color"> Away </span><span id="right-ball">o</span></div>
+            <div id="leftTeamPosition" class="text-center"><span id="left-position-name"> Home </span> <span id="left-ball">o</span></div>
+            <div id="rightTeamPosition" class="text-center"><span id="right-position-name"> Away </span> <span id="right-ball">o</span></div>
 
             <div id="lineOfScrimmage"> </div>
             <div id="firstDownPosition"> </div>
@@ -302,6 +312,22 @@
               </div>
             </div>
             <div id="rightEndzone" class="text-center"><span id="right-team-name">Away</span></div>
+          </div>
+
+          <div class="col-md-12" id="team-plays">
+            <div class="row">
+              <div class="col-md-6">
+                <p id="offense-called" class="none">off</p>
+              </div>
+              <div class="col-md-6">
+                <p id="defense-called" class="none">def</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p id="outcome-display" class="">bead</p>
+              </div>
+            </div>
           </div>
 
         </div>

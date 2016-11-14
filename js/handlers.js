@@ -26,8 +26,6 @@ $("#save-settings").click(function() {
   
   localStorage.setItem("audible", audible);
   localStorage.setItem("customPlays", customPlays);
-
-  //getter localStorage.getItem("lastname");
 });
 
 function loadSettings() {
@@ -37,6 +35,7 @@ function loadSettings() {
     $("#team-y-color").val(localStorage.getItem("team2color"));
     $("#audible-checkbox").prop('checked', localStorage.getItem("audible"));
     $("#custom-plays-checkbox").prop('checked', localStorage.getItem("customPlays"));
+    setTouchDowns();
 }
 loadSettings();
 
@@ -76,13 +75,11 @@ $("#recieve-choice").click(function() {
 
 $("#left-choice").click(function() {
   localStorage.setItem("leftDirection", winner);
-  document.getElementById("left-team-name").innerHTML = winner;
-  document.getElementById("right-team-name").innerHTML = loser;
+  setTouchDowns()
 });
 $("#right-choice").click(function() {
   localStorage.setItem("leftDirection", loser);
-  document.getElementById("left-team-name").innerHTML = loser;
-  document.getElementById("right-team-name").innerHTML = winner;
+  setTouchDowns()
 });
 
 $("#coin-flip-close").click(function() {
@@ -91,3 +88,27 @@ $("#coin-flip-close").click(function() {
   $("#setup-game").css("display", localStorage.getItem("setupGame"));
   $("#next-play").css("display", localStorage.getItem("nextPlay"));
 });
+
+function setTouchDowns() {
+  var team1 = localStorage.getItem("team1name");
+  var team2 = localStorage.getItem("team2name");
+  var left = localStorage.getItem("leftDirection");
+  var right = (left == team1) ? team2 : team1;
+
+  document.getElementById("left-team-name").innerHTML = left;
+  document.getElementById("right-team-name").innerHTML = right;
+
+  document.getElementById("left-position-name").innerHTML = left;
+  document.getElementById("right-position-name").innerHTML = right;
+
+  var currentOffense = localStorage.getItem("currentOffense");
+
+  if(currentOffense == team1){
+    document.getElementById("left-ball").innerHTML = "";
+    document.getElementById("right-ball").innerHTML = "o";
+  }
+  else{
+    document.getElementById("left-ball").innerHTML = "o";
+    document.getElementById("right-ball").innerHTML = ""; 
+  }
+};

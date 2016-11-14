@@ -1,3 +1,16 @@
+function setAllIfPossible() {
+    var teamLeftName = localStorage.getItem("team1name");
+    var teamRightName = localStorage.getItem("team2name");
+    var leftDirection = localStorage.getItem("leftDirection");
+    var receiveFirst = localStorage.getItem("receiveFirst");
+    setTouchDowns();
+    if(teamLeftName && teamRightName){
+
+    }
+}
+
+setAllIfPossible();
+
 var playCount = 0;
 
 var divider = "<div class=\"dropdown-divider\"></div>";
@@ -59,11 +72,7 @@ function createDefenseChoices() {
 createOffenseChoices();
 createDefenseChoices();
 
-function setAllPositions(offenseYds, defenseYds, firstYds, fieldGoalYds) {
-    offenseYds = 20; 
-    defenseYds = 30; 
-    firstYds = 30; 
-
+function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
     var tenLeft = Math.ceil($("#tenLeft").position().left);
     var twentyLeft = Math.ceil($("#twentyLeft").position().left);
     var thirtyLeft = Math.ceil($("#thirtyLeft").position().left);
@@ -75,25 +84,52 @@ function setAllPositions(offenseYds, defenseYds, firstYds, fieldGoalYds) {
     var twentyRight = Math.ceil($("#twentyRight").position().left);
     var tenRight = Math.ceil($("#tenRight").position().left);
 
-    console.log(tenLeft);
-    console.log(twentyLeft);
-    console.log(thirtyLeft);
-    console.log(fourtyLeft);
+    var zeroYardLine = tenLeft - 8;
+    var hundredYardLine = tenRight + 83;
 
+    var oneYard = ((twentyLeft - tenLeft) / 10);
+
+    var offensePosition = getYardPosition(zeroYardLine, offenseYds, oneYard);
+    var firstDownPosition = getYardPosition(zeroYardLine, firstYds, oneYard);
+
+    if(hashPosition == "L"){
+        hashPosition = 140;
+    }
+    if(hashPosition == "C"){
+        hashPosition = 175;
+    }
+    else{
+        hashPosition = 210;
+    }
+
+    setField(offensePosition, firstDownPosition, hashPosition);
+}
+
+function getYardPosition(zeroYardLine, yard, oneYard) {
+    //returns the pixel position
+    var position = zeroYardLine + (yard * oneYard);
+    return position;
+}
+
+function setField(offensePos, firstDownPos, hashPosition) {
     $('#lineOfScrimmage').css({
-        'left': (tenLeft - 8) + "px"
+        'left': offensePos + "px"
     });
     $('#firstDownPosition').css({
-        'left': (twentyLeft - 8) + "px"
+        'left': firstDownPos + "px"
+    });
+
+    $('#leftTeamPosition').css({
+        'left': (offensePos - 58) + "px", 
+        'top': hashPosition + "px"
+    });
+    $('#rightTeamPosition').css({
+        'left': (offensePos - 26) + "px", 
+        'top': hashPosition + "px"
     });
 }
 
-function getYardPosition(pixels, yard) {
-    //returns the pixel position
-    return 100;
-}
-
-setAllPositions();
+setAllPositions(20, 30, "C");
 /*
 Game Flow:
 Have another file that can save details, stats, and positions, so page refresh doesn't kill the game

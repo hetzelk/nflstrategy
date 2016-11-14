@@ -263,13 +263,17 @@ this is only for my offense creator
 .text-center{
   text-align: center;
 }
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
 
 #leftTeamPosition{
   background-color: red;
   position: absolute;
   width: 100px;
-  top: 140px;
-  left: 120px;
   z-index: 100;
   -webkit-transform: rotate(270deg);
   -moz-transform: rotate(270deg);
@@ -282,8 +286,6 @@ this is only for my offense creator
   background-color: orange;
   position: absolute;
   width: 100px;
-  top: 140px;
-  left: 150px;
   z-index: 100;
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
@@ -296,8 +298,6 @@ this is only for my offense creator
   background-color: transparent;
   border-right: 4px solid blue; 
   position: absolute;
-  top: 0px;
-  left: 0px;
   z-index: 75;
   height: 375px;
   width: 10px;
@@ -307,8 +307,6 @@ this is only for my offense creator
   background-color: transparent;
   border-right: 4px solid yellow;
   position: absolute;
-  top: 0px;
-  left: 5px;
   z-index: 75;
   height: 375px;
   width: 10px;
@@ -316,4 +314,12 @@ this is only for my offense creator
 
 #fieldGoalPosition{
 
+}
+
+#scoreboard{
+  border: 3px solid white;
+  outline: 2px solid black;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
 }
