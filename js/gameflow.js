@@ -4,28 +4,53 @@ function setAllIfPossible() {
         return;
     }
     else{
-        var teamLeftName = localStorage.getItem("team1name");
-        var teamRightName = localStorage.getItem("team2name");
-        var leftDirection = localStorage.getItem("leftDirection");
-        var receiveFirst = localStorage.getItem("receiveFirst");
         setTouchDowns(); 
         setupField(); 
+        //setScoreboard();
     }
 }
 
 function setupField() {
-  //get current field positions from localStorage
-  var fieldPositions = localStorage.getItem("fieldPositions");
-  fieldPositions = fieldPositions.split(",");
-  var offensePos = fieldPositions[0];
-  var firstDownPos = fieldPositions[1];
-  var hashPos = fieldPositions[2];
-  
-  //var poss = fieldPositions[3];
-  setAllPositions(parseInt(offensePos),parseInt(firstDownPos),hashPos);
+    //get current field positions from localStorage
+    var fieldPositions = localStorage.getItem("fieldPositions");
+    fieldPositions = fieldPositions.split(",");
+    var offensePos = fieldPositions[0];
+    var firstDownPos = fieldPositions[1];
+    var hashPos = fieldPositions[2];
+    if(hashPos == "K"){
+        kickOffSetup();
+    }
+    else{
+        setAllPositions(parseInt(offensePos),parseInt(firstDownPos),hashPos);
+    }
 }
 
 setAllIfPossible();
+
+function setTouchDowns() {
+  if(localStorage.getItem("setupGame") !== "none"){
+    return;
+  }
+  var home = localStorage.getItem("home");
+  var away = localStorage.getItem("away");
+
+  document.getElementById("left-team-name").innerHTML = home;
+  document.getElementById("right-team-name").innerHTML = away;
+
+  setBallHolder();
+};
+
+function setBallHolder() {
+  var currentOffense = localStorage.getItem("currentOffense");
+  if(currentOffense == localStorage.getItem("leftDirection")){
+    document.getElementById("left-ball").innerHTML = "";
+    document.getElementById("right-ball").innerHTML = "o";
+  }
+  else{
+    document.getElementById("left-ball").innerHTML = "o";
+    document.getElementById("right-ball").innerHTML = ""; 
+  }
+}
 
 var divider = "<div class=\"dropdown-divider\"></div>";
 
@@ -53,6 +78,12 @@ function createOffenseChoices() {
             offenseSelect += "<a class=\"dropdown-item offense-choice\" id=" + offense[i].id + ">" + offense[i].name + "</a>";
         }
     };
+    /*
+    <optgroup label="4-3 asd">
+        <option class="select-hover" value="Running">Running</option>
+        <option class="select-hover" value="Paragliding">Paragliding</option>
+        <option class="select-hover" value="Swimming">Swimming</option>
+    </optgroup>*/
     document.getElementById("offense-dropdown-menu").innerHTML = offenseSelect;
 }
 
@@ -86,68 +117,52 @@ function createDefenseChoices() {
 createOffenseChoices();
 createDefenseChoices();
 
-function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds, playType) {
-    if(playType == "kickoff"){
-
-    }
-
-    var tenLeft = Math.ceil($("#tenLeft").position().left);
-    var twentyLeft = Math.ceil($("#twentyLeft").position().left);
-    /*not really needed 
-    var thirtyLeft = Math.ceil($("#thirtyLeft").position().left);
-    var fourtyLeft = Math.ceil($("#fourtyLeft").position().left);
-    var fiftyLeft = Math.ceil($("#fiftyLeft").position().left);
-    var fiftyRight = Math.ceil($("#fiftyRight").position().left);
-    var fourtyRight = Math.ceil($("#fourtyRight").position().left);
-    var thirtyRight = Math.ceil($("#thirtyRight").position().left);
-    var twentyRight = Math.ceil($("#twentyRight").position().left);
-    var tenRight = Math.ceil($("#tenRight").position().left);*/
-
-    var zeroYardLine = tenLeft - 8;
-    var hundredYardLine = tenRight + 83;
-
-    var oneYard = ((twentyLeft - tenLeft) / 10);
-
-    var offensePosition = getYardPosition(zeroYardLine, offenseYds, oneYard);
-    var firstDownPosition = getYardPosition(zeroYardLine, firstYds, oneYard);
-
-
+function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
+    var offensePosition = getYardPosition(offenseYds);
+    var firstDownPosition = getYardPosition(firstYds);
     /*
 
-*****************************************
-Make sure to account for the hashposition depending who is on the top of the screen and the bottom.
-*****************************************
+    *****************************************
+    Make sure to account for the hashposition depending who is on the top of the screen and the bottom.
+    *****************************************
 
     */
 
     if(hashPosition == "L"){
         hashPosition = 140;
-        /*
-        if(offense going left '''or something){
+        
+        if(localStorage.getItem("currentOffense") == localStorage.getItem("leftDirection")){
             hashPosition = 210;
-        }*/
+        }
     }
-    if(hashPosition == "R"){
+    else if(hashPosition == "R"){
         hashPosition = 210;
-        /*
-        if(offense going left '''or something){
+
+        if(localStorage.getItem("currentOffense") == localStorage.getItem("leftDirection")){
             hashPosition = 140;
-        }*/
+        }
     }
     else{
         hashPosition = 175;
     }
 
     setField(offensePosition, firstDownPosition, hashPosition);
+
 }
 
-function getYardPosition(zeroYardLine, yard, oneYard) {
+function getYardPosition(yard) {
     //returns the pixel position
+    var tenLeft = Math.ceil($("#tenLeft").position().left);
+    var twentyLeft = Math.ceil($("#twentyLeft").position().left);
+    var zeroYardLine = tenLeft - 8;
+    var hundredYardLine = tenRight + 83;
+
+    var oneYard = ((twentyLeft - tenLeft) / 10);
     var position = zeroYardLine + (yard * oneYard);
     return position;
 }
 
-function setField(offensePos, firstDownPos, hashPosition, arguments) {
+function setField(offensePos, firstDownPos, hashPosition) {
     $('#lineOfScrimmage').css({
         'left': offensePos + "px"
     });
@@ -185,44 +200,116 @@ function penalty(penaltyType) {
     //down here popup the penalty modal that displays a reason and the number of yards the penalty is.
     //then add the penalty and correct down to the field logic (2nd down still, -10 yards for offense.)
 }
-/*
-Game Flow:
-Have localstorage save details, stats, and positions, so page refresh doesn't kill the game
-Game reset clears that saved file.
 
-Setup game button -
-setup = asks for teams names and colors. Also special rules options.
-display those details.
+function flipDirection() {
+  // body...
+}
 
-Start game button -
-shows the field, score, time, TOL, other details etc (main screen)
+function kickOffSetup(){
+    var home = localStorage.getItem("home");
+    var away = localStorage.getItem("away");
+    var homeColor = localStorage.getItem("homeColor");
+    var awayColor = localStorage.getItem("awayColor");
+    var receiveFirst = localStorage.getItem("receiveFirst");
+    var leftDirection = localStorage.getItem("leftDirection");
+    var firstDownPosition = 0;
+    var lineOfScrimmage = 0;
+    var left = "";
+    var right = "";
+    var rotate = false;
+    if(receiveFirst == away && leftDirection == away) /*p1kick, p2left || p2recieve, p1right*/{
+        lineOfScrimmage = getYardPosition(30);
+        firstDownPosition = getYardPosition(40);
+        left = home;
+        right = away;
+        localStorage.setItem("fieldPositions", "30,40,K"); 
+    }
+    else if(receiveFirst == away && leftDirection == home) /*p1kick, p2right || p2recieve, p1left*/{
+        lineOfScrimmage = getYardPosition(70);
+        firstDownPosition = getYardPosition(60);
+        left = away;
+        right = home;
+        rotate = true;
+        localStorage.setItem("fieldPositions", "70,60,K"); 
+    }
+    else if(receiveFirst == home && leftDirection == home) /*p2kick, p1left || p1recieve, p2right*/{
+        lineOfScrimmage = getYardPosition(30);
+        firstDownPosition = getYardPosition(40);
+        left = away;
+        right = home;
+        localStorage.setItem("fieldPositions", "30,40,K"); 
+    }
+    else /*receiveFirst == home && leftDirection == away -- p2kick, p1right || p1recieve, p2left */{
+        lineOfScrimmage = getYardPosition(70);
+        firstDownPosition = getYardPosition(60);
+        left = home;
+        right = away;
+        rotate = true;
+        localStorage.setItem("fieldPositions", "70,60,K"); 
+    }
 
-Start play button/Next play button - 
-modal popup for offense, 40s to pick,
-    -timeout button available, 
-        -diable if no timeouts left
-    -time runs out, penalty is called - ***delay of game penalty for play pick. Move the ball wherever, then allow them to pick a new play.
-    -continue button is hit.
-modal popup for defense, 40s to pick
+    $('#lineOfScrimmage').css({
+        'left': lineOfScrimmage + "px"
+    });
+    $('#firstDownPosition').css({
+        'left': firstDownPosition + "px"
+    });
 
-once the defense hits continue, random bead is hit - make some visual for this motion.
-UI shows the out come of the play, then moves the players on the field.
-next
+    if(rotate){
+        document.getElementById("left-position-name").innerHTML = left;
+        $('#leftTeamPosition').css({
+            'background-color': ((right == away) ? homeColor : awayColor),
+            'left': (firstDownPosition - 58) + "px", 
+            'top': "175px"
+        });
 
-*/
+        document.getElementById("right-position-name").innerHTML = right;
+        $('#rightTeamPosition').css({
+            'background-color': ((left == home) ? awayColor : homeColor),
+            'left': (lineOfScrimmage - 26) + "px", 
+            'top': "175px"
+        });
+    }
+    else{
+        document.getElementById("left-position-name").innerHTML = left;
+        $('#leftTeamPosition').css({
+            'background-color': ((right == away) ? homeColor : awayColor),
+            'left': (lineOfScrimmage - 58) + "px", 
+            'top': "175px"
+        });
 
-/*
-ideas
+        document.getElementById("right-position-name").innerHTML = right;
+        $('#rightTeamPosition').css({
+            'background-color': ((left == home) ? awayColor : homeColor),
+            'left': (firstDownPosition - 26) + "px", 
+            'top': "175px"
+        });
+    }
+    setBallHolder();
+}
 
-find a way to place offense and defense on top of each other, just like NFL strategy
+function setScoreboard(){  
+  if(localStorage.getItem("setupGame") !== "none"){
+    return;
+  }
+  document.getElementById("scoreboard-away").innerHTML = localStorage.getItem("away");
+  document.getElementById("scoreboard-home").innerHTML = localStorage.getItem("home");
+  document.getElementById("scoreboard-time-value").innerHTML = localStorage.getItem("time");
 
-keep count of play usage for stats, both teams can view
+  document.getElementById("scoreboard-t1-tol-value").innerHTML = localStorage.getItem("t1tol");
+  document.getElementById("scoreboard-t2-tol-value").innerHTML = localStorage.getItem("t2tol");
+  document.getElementById("scoreboard-qtr-value").innerHTML = localStorage.getItem("qtr");
+  document.getElementById("scoreboard-down-value").innerHTML = localStorage.getItem("down");
+  document.getElementById("scoreboard-togo-value").innerHTML = localStorage.getItem("togo");
+  document.getElementById("scoreboard-ballon-value").innerHTML = localStorage.getItem("ballon");
 
-audible - gets 2 audibles per game
-    -if the offense/defense calls an audible/re-adjustment, 
-    -it picks a better play based on how the opposing team is lined up
-
-ability to add favorite plays
-
-4th and inches, when the play is 3rd and 10, with a 10 yard gain, 4th and inches might happen
-*/
+  var poss = "away";
+  if(poss == "away"){
+    document.getElementById("scoreboard-away-ball").innerHTML = "F";
+    document.getElementById("scoreboard-home-ball").innerHTML = "";
+  }
+  else{
+    document.getElementById("scoreboard-home-ball").innerHTML = "F";
+    document.getElementById("scoreboard-away-ball").innerHTML = "";
+  }
+}

@@ -91,10 +91,10 @@
                   <div class="row">
                     <div class="col-md-6">
                       <span>Home Name: </span>
-                      <input type="text" id="team-x-name">
+                      <input type="text" id="home-name">
                       <br>
-                      <span><span id="team-1-name">Home</span> Color: </span>
-                      <select class="color-select" id="team-x-color">
+                      <span><span id="home-color-name">Home</span> Color: </span>
+                      <select class="color-select" id="home-color">
                         <option></option>
                         <option value="red">Red</option>
                         <option value="green">Green</option>
@@ -105,16 +105,21 @@
 
                     <div class="col-md-6">
                       <span>Away Name: </span>
-                      <input type="text" id="team-y-name">
+                      <input type="text" id="away-name">
                       <br>
-                      <span><span id="team-2-name">Away</span> Color: </span>
-                      <select class="color-select" id="team-y-color">
+                      <span><span id="away-color-name">Away</span> Color: </span>
+                      <select class="color-select" id="away-color">
                         <option></option>
                         <option value="red">Red</option>
                         <option value="green">Green</option>
                         <option value="blue">Blue</option>
                         <option value="orange">Orange</option>
                       </select>
+                      <br>
+                      <span>Computer Player?</span>
+                      <br>
+                      <input type="radio" name="aiPlayer" value="true"> Yes &nbsp; &nbsp; 
+                      <input type="radio" name="aiPlayer" value="false" checked> No<br>
                     </div>
                   </div>
 
@@ -243,25 +248,22 @@
                           Defense
                         </button>
                         <br>
-                        <select size="10" class="select-box">
-                         <option class="select-hover">1afasasdasdasdasds</option>
+                        Defense
+                        <select size="10" class="select-box" id="select10Dropdown">
+                         <option class="select-hover">4-2 Key Safety X Combo</option>
+                          <optgroup label="4-3 asd">
+                           <option class="select-hover" value="Running">Running</option>
+                           <option class="select-hover" value="Paragliding">Paragliding</option>
+                           <option class="select-hover" value="Swimming">Swimming</option>
+                          </optgroup>
                          <option class="select-hover">2</option>
                          <option class="select-hover">3</option>
                          <option class="select-hover">4</option>
-                         <option>5</option>
-                         <option class="select-hover">6</option>
-                         <option>3</option>
                          <option class="select-hover">4</option>
-                         <option>5</option>
-                         <option>6</option>
-                         <option>3</option>
-                         <option>4</option>
-                         <option>5</option>
-                         <option>6</option>
-                         <option>3</option>
-                         <option>4</option>
-                         <option>5</option>
-                         <option>6</option>
+                         <option class="select-hover">6</option>
+                         <option class="select-hover">4</option>
+                         <option class="select-hover">4</option>
+                         <option class="select-hover">4</option>
                         </select>
                         <div class="dropdown-menu" id="defense-dropdown-menu">
                         </div>
@@ -371,8 +373,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/offense.js"></script>
     <script src="js/defense.js"></script>
-    <script src="js/handlers.js"></script>
     <script src="js/gameflow.js"></script>
+    <script src="js/handlers.js"></script>
     <script src="js/callplay.js"></script>
 
     <script type="text/javascript">
