@@ -107,4 +107,12 @@ $("#coin-flip-close").click(function() {
   localStorage.setItem("down", "1");
   localStorage.setItem("togo", "10");
   localStorage.setItem("ballon", "30");
+  setScoreboard();
+});
+
+$("#random-bead").click(function() {
+    var beadPos = Math.floor((Math.random() * 100) + 1);
+    var beadNumber = randomBead("regular");
+    validateOutcome(beadNumber);
+    setBeadPosition(beadPos);
 });

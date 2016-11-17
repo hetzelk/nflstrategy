@@ -77,6 +77,10 @@ body {
   margin-top: 1em;
 }
 
+#menu-column{
+    margin-bottom: 3em;
+}
+
 .none{
   display: none;
 }
@@ -426,4 +430,45 @@ this is only for my offense creator
 
 .select-hover:hover{
   background-color:black;
+}
+
+#bead{
+    background-color: red;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    border:solid black 2px;
+    z-index: 1000;
+    position: absolute;
+    top:10px;
+    left:203px;
+}
+.onebead{
+    background-color: gray;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 100px;
+    border: solid black 3px;
+}
+.twobead{
+    background-color: lightgray;
+    height: 25px;
+    border: solid black 3px;
+}
+.threebead{
+    background-color: gray;
+    height: 125px;
+    border: solid black 3px;
+}
+.fourbead{
+    background-color: lightgray;
+    height: 50px;
+    border: solid black 3px;
+}
+.fivebead{
+    background-color: gray;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: 200px;
+    border: solid black 3px;
 }

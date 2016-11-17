@@ -150,8 +150,3 @@ function displayOutcome (outcome) {
 
     document.getElementById("outcome-display").innerHTML = quote;
 }
-
-$("#random-bead").click(function() {
-    var beadNumber = randomBead("regular");
-    validateOutcome(beadNumber);
-});

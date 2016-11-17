@@ -41,15 +41,24 @@ function setTouchDowns() {
 };
 
 function setBallHolder() {
-  var currentOffense = localStorage.getItem("currentOffense");
-  if(currentOffense == localStorage.getItem("leftDirection")){
+    var currentOffense = localStorage.getItem("currentOffense");
+    if(currentOffense == localStorage.getItem("leftDirection")){
     document.getElementById("left-ball").innerHTML = "";
     document.getElementById("right-ball").innerHTML = "o";
-  }
-  else{
+    }
+    else{
     document.getElementById("left-ball").innerHTML = "o";
-    document.getElementById("right-ball").innerHTML = ""; 
-  }
+    document.getElementById("right-ball").innerHTML = "";
+    }
+
+    if(currentOffense == localStorage.getItem("away")){
+        document.getElementById("scoreboard-away-ball").innerHTML = "F";
+        document.getElementById("scoreboard-home-ball").innerHTML = "";
+    }
+    else{
+        document.getElementById("scoreboard-home-ball").innerHTML = "F";
+        document.getElementById("scoreboard-away-ball").innerHTML = "";
+    }
 }
 
 var divider = "<div class=\"dropdown-divider\"></div>";
@@ -120,14 +129,6 @@ createDefenseChoices();
 function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
     var offensePosition = getYardPosition(offenseYds);
     var firstDownPosition = getYardPosition(firstYds);
-    /*
-
-    *****************************************
-    Make sure to account for the hashposition depending who is on the top of the screen and the bottom.
-    *****************************************
-
-    */
-
     if(hashPosition == "L"){
         hashPosition = 140;
         
@@ -160,6 +161,15 @@ function getYardPosition(yard) {
     var oneYard = ((twentyLeft - tenLeft) / 10);
     var position = zeroYardLine + (yard * oneYard);
     return position;
+}
+
+function setBeadPosition(beadPos){
+    var beadLeft = Math.ceil($("#gameDiv").offset().left);
+    var onePosition = 490/100;
+    $('#bead').css({
+        'left': beadLeft - 41 + "px",
+        'top': (onePosition * beadPos) + "px"
+    });
 }
 
 function setField(offensePos, firstDownPos, hashPosition) {
@@ -199,10 +209,6 @@ function penalty(penaltyType) {
 
     //down here popup the penalty modal that displays a reason and the number of yards the penalty is.
     //then add the penalty and correct down to the field logic (2nd down still, -10 yards for offense.)
-}
-
-function flipDirection() {
-  // body...
 }
 
 function kickOffSetup(){
@@ -302,14 +308,4 @@ function setScoreboard(){
   document.getElementById("scoreboard-down-value").innerHTML = localStorage.getItem("down");
   document.getElementById("scoreboard-togo-value").innerHTML = localStorage.getItem("togo");
   document.getElementById("scoreboard-ballon-value").innerHTML = localStorage.getItem("ballon");
-
-  var poss = "away";
-  if(poss == "away"){
-    document.getElementById("scoreboard-away-ball").innerHTML = "F";
-    document.getElementById("scoreboard-home-ball").innerHTML = "";
-  }
-  else{
-    document.getElementById("scoreboard-home-ball").innerHTML = "F";
-    document.getElementById("scoreboard-away-ball").innerHTML = "";
-  }
 }

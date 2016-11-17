@@ -123,4 +123,4 @@ var defenseTesting = {
 
 
 
-var defense = [defenseTesting,PlugWeakZone34,OverKeyStrongZone,TwistStrongZone43,MaxBlitz43,SamWillBlitz43,SamWillBlitz43,BlastManToMan43,KeyManToMan43,KeyMombo34,KeySafetyXCombo42,NickelPrevent34,UnderKeyDouble,PuntReturn,FGBlock,KickReturn]
+var defense = [PuntReturn,FGBlock,KickReturn,defenseTesting,PlugWeakZone34,OverKeyStrongZone,TwistStrongZone43,MaxBlitz43,SamWillBlitz43,SamWillBlitz43,BlastManToMan43,KeyManToMan43,KeyMombo34,KeySafetyXCombo42,NickelPrevent34,UnderKeyDouble]
