@@ -207,6 +207,7 @@ function fieldOutcome(yards, hashPosition) {
     quote = yards;
     //set to new positions
     localStorage.setItem("fieldPositions", finalLOS + "," + finalFirstDown + "," + hashPosition);
+    localStorage.setItem("ballon", finalLOS);
     setAllPositions(finalLOS, finalFirstDown, hashPosition);
 
     document.getElementById("outcome-display").innerHTML = quote;
@@ -275,6 +276,7 @@ function setField(offensePos, firstDownPos, hashPosition) {
         'left': (offensePos - 26) + "px", 
         'top': hashPosition + "px"
     });
+    setScoreboard();
 }
 
 function moveBallAnimation() {
@@ -420,7 +422,11 @@ function setScoreboard(){
     document.getElementById("scoreboard-qtr-value").innerHTML = localStorage.getItem("qtr");
     document.getElementById("scoreboard-down-value").innerHTML = localStorage.getItem("down");
     document.getElementById("scoreboard-togo-value").innerHTML = localStorage.getItem("togo");
-    document.getElementById("scoreboard-ballon-value").innerHTML = localStorage.getItem("ballon");
+    var ballon = localStorage.getItem("ballon");
+    if(ballon > 50){
+        ballon = 100 - ballon;
+    }
+    document.getElementById("scoreboard-ballon-value").innerHTML = ballon;
 
     document.getElementById("scoreboard-away-score").innerHTML = localStorage.getItem("homeScore");
     document.getElementById("scoreboard-home-score").innerHTML = localStorage.getItem("awayScore");
@@ -428,13 +434,48 @@ function setScoreboard(){
 
 function addPoints(team, points) {
     var home = localStorage.getItem("home");
+
     if(team == home){
         var score = parseInt(localStorage.getItem("homeScore")) + points;
         localStorage.setItem("homeScore", score);
+        setTimeout(function(){
+            $('#touchdown-modal').modal('show')
+        }, 1500);
     }
     else{
         var score = parseInt(localStorage.getItem("awayScore")) + points;
         localStorage.setItem("awayScore", score);
+        setTimeout(function(){
+            $('#touchdown-modal').modal('show')
+        }, 1500);
     }
     setScoreboard();
 }
+
+$("#twoPTSetup").click(function() {
+    if(localStorage.getItem("fieldPositions").match("^100")){
+        localStorage.setItem("fieldPositions", "98,100,C");
+        localStorage.setItem("ballon", 98);
+        setAllPositions(98, 100, "C");
+    }
+    else{
+        localStorage.setItem("fieldPositions", "2,2,C");
+        localStorage.setItem("ballon", 2);
+        setAllPositions(2, 0, "C");
+    }
+    setScoreboard();
+});
+
+$("#fieldGoalSetup").click(function() {
+    if(localStorage.getItem("fieldPositions").match("^100")){
+        localStorage.setItem("fieldPositions", "98,100,C");
+        localStorage.setItem("ballon", 98);
+        setAllPositions(98, 100, "C");
+    }
+    else{
+        localStorage.setItem("fieldPositions", "2,2,C");
+        localStorage.setItem("ballon", 2);
+        setAllPositions(2, 0, "C");
+    }
+    setScoreboard();
+});

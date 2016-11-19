@@ -94,6 +94,7 @@
             </div>
             <div class="col-md-2">
               <button class="btn btn-danger" id="random-bead"> Random Bead </button>
+                <button type="button" class="btn btn-success" id="" data-toggle="modal" data-target="#touchdown-modal" data-dismiss="modal" >Touchdown</button>
             </div>
           </div>
 
@@ -211,6 +212,36 @@
               </div>
             </div>
           </div>
+
+            <!-- Touchdown modal -->
+            <div class="modal fade" id="touchdown-modal" tabindex="-1" role="dialog" aria-labelledby="touchdownLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="touchdownLabel">Touchdown</h4>
+                        </div>
+                        <div class="modal-body settings-body">
+                            <div class="row" id="">
+                                <p>scoring</p>
+                                <p>touchdown</p>
+                                <p>field goal</p>
+                                <p>safety</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="offset-sm-2 col-sm-3">
+                                <button type="button" class="btn btn-danger" id="twoPTSetup" data-dismiss="modal">2-PT Conversion</button>
+                            </div>
+                            <div class="offset-sm-1 col-sm-3">
+                                <button type="button" class="btn btn-warning" id="fieldGoalSetup" data-dismiss="modal">Field Goal</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
           <!-- Offense modal -->
 
