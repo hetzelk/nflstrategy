@@ -42,6 +42,7 @@ function setTouchDowns() {
 
 function setBallHolder() {
     var currentOffense = localStorage.getItem("currentOffense");
+    var defenseName = "";
     if(currentOffense == localStorage.getItem("leftDirection")){
     document.getElementById("left-ball").innerHTML = "";
     document.getElementById("right-ball").innerHTML = "o";
@@ -54,11 +55,19 @@ function setBallHolder() {
     if(currentOffense == localStorage.getItem("away")){
         document.getElementById("scoreboard-away-ball").innerHTML = "F";
         document.getElementById("scoreboard-home-ball").innerHTML = "";
+        defenseName = localStorage.getItem("away");
     }
     else{
         document.getElementById("scoreboard-home-ball").innerHTML = "F";
         document.getElementById("scoreboard-away-ball").innerHTML = "";
+        defenseName = localStorage.getItem("home");
     }
+    playChoiceNames(currentOffense, defenseName);
+}
+
+function playChoiceNames(offenseName, defenseName){
+    document.getElementById("offenseName").innerHTML = offenseName;
+    document.getElementById("defenseName").innerHTML = defenseName;
 }
 
 var divider = "<div class=\"dropdown-divider\"></div>";
@@ -126,6 +135,83 @@ function createDefenseChoices() {
 createOffenseChoices();
 createDefenseChoices();
 
+function fieldOutcome(yards, hashPosition) {
+    /*
+    yards = the amount of yards gained/lost
+    hashPosition = has position they will end up on
+    */
+    var fumble = false;
+    var interception = false;
+    if(yards.includes("f")){
+        yards = yards.slice(0, yards.length - 1);
+        fumble = true;
+    }
+    else if(yards.includes("i")){
+        yards = yards.slice(0, yards.length - 1);
+        interception = true;
+    }
+    var currentOffense = localStorage.getItem("currentOffense");
+    var leftDirection = localStorage.getItem("leftDirection");
+    var leftTeam = document.getElementById("left-position-name").innerHTML;
+    var rightTeam = document.getElementById("right-position-name").innerHTML;
+    var fieldPositions = localStorage.getItem("fieldPositions");
+    fieldPositions = fieldPositions.split(",");
+    var currentOffensePos = fieldPositions[0];
+    var currentFirstDownPos = fieldPositions[1];
+
+    var finalLOS = 0;
+    var finalFirstDown = currentFirstDownPos;
+
+    var quote = "";
+
+    if(currentOffense == leftTeam){
+        //console.log("LLL " + currentOffense, leftTeam);
+        finalLOS = (parseInt(currentOffensePos) + parseInt(yards));
+        if(finalLOS >= currentFirstDownPos){
+            finalFirstDown = finalLOS + 10;
+            if(finalFirstDown >= 100){
+                finalFirstDown = 100;
+            }
+        }
+        if(finalLOS >= 100){
+            addPoints(leftTeam, 6);
+            finalLOS = 100;
+            finalFirstDown = 100;
+        }
+        else if(finalLOS <= 0){
+            addPoints(rightTeam, 2);
+            finalLOS = 0;
+            finalFirstDown = 0;
+        }
+    }
+    else/*currentOffense == rightTeam*/{
+        //console.log("RRR " + currentOffense, rightTeam);
+        finalLOS = (parseInt(currentOffensePos) - parseInt(yards));
+        if(finalLOS <= currentFirstDownPos){
+            finalFirstDown = finalLOS - 10;
+            if(finalFirstDown <= 0){
+                finalFirstDown = 0;
+            }
+        }
+        if(finalLOS >= 100){
+            addPoints(leftTeam, 2);
+            finalLOS = 100;
+            finalFirstDown = 100;
+        }
+        else if(finalLOS <= 0){
+            addPoints(rightTeam, 6);
+            finalLOS = 0;
+            finalFirstDown = 0;
+        }
+    }
+    quote = yards;
+    //set to new positions
+    localStorage.setItem("fieldPositions", finalLOS + "," + finalFirstDown + "," + hashPosition);
+    setAllPositions(finalLOS, finalFirstDown, hashPosition);
+
+    document.getElementById("outcome-display").innerHTML = quote;
+}
+
 function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
     var offensePosition = getYardPosition(offenseYds);
     var firstDownPosition = getYardPosition(firstYds);
@@ -148,7 +234,6 @@ function setAllPositions(offenseYds, firstYds, hashPosition, fieldGoalYds) {
     }
 
     setField(offensePosition, firstDownPosition, hashPosition);
-
 }
 
 function getYardPosition(yard) {
@@ -156,7 +241,6 @@ function getYardPosition(yard) {
     var tenLeft = Math.ceil($("#tenLeft").position().left);
     var twentyLeft = Math.ceil($("#twentyLeft").position().left);
     var zeroYardLine = tenLeft - 8;
-    var hundredYardLine = tenRight + 83;
 
     var oneYard = ((twentyLeft - tenLeft) / 10);
     var position = zeroYardLine + (yard * oneYard);
@@ -164,15 +248,17 @@ function getYardPosition(yard) {
 }
 
 function setBeadPosition(beadPos){
-    var beadLeft = Math.ceil($("#gameDiv").offset().left);
     var onePosition = 490/100;
-    $('#bead').css({
-        'left': beadLeft - 41 + "px",
-        'top': (onePosition * beadPos) + "px"
-    });
+    $("#bead").animate({ 'top': (onePosition * 2) + "px" }, 150 );
+    $("#bead").animate({ 'top': (onePosition * 92) + "px" }, 200 );
+    $("#bead").animate({ 'top': (onePosition * 2) + "px" }, 200 );
+    $("#bead").animate({ 'top': (onePosition * 92) + "px" }, 250 );
+    $("#bead").animate({ 'top': (onePosition * beadPos/2) + "px" }, 300 );
+    $("#bead").animate({ 'top': (onePosition * beadPos) + "px" }, 500 );
 }
 
 function setField(offensePos, firstDownPos, hashPosition) {
+    //TODO add animations here
     $('#lineOfScrimmage').css({
         'left': offensePos + "px"
     });
@@ -180,7 +266,7 @@ function setField(offensePos, firstDownPos, hashPosition) {
         'left': firstDownPos + "px"
     });
 
-    //need to add more logic here based on field direction and the kickoff setup.
+    //need to add more logic here based on field direction
     $('#leftTeamPosition').css({
         'left': (offensePos - 58) + "px", 
         'top': hashPosition + "px"
@@ -189,6 +275,10 @@ function setField(offensePos, firstDownPos, hashPosition) {
         'left': (offensePos - 26) + "px", 
         'top': hashPosition + "px"
     });
+}
+
+function moveBallAnimation() {
+    //amimation
 }
 
 function penalty(penaltyType) {
@@ -214,8 +304,6 @@ function penalty(penaltyType) {
 function kickOffSetup(){
     var home = localStorage.getItem("home");
     var away = localStorage.getItem("away");
-    var homeColor = localStorage.getItem("homeColor");
-    var awayColor = localStorage.getItem("awayColor");
     var receiveFirst = localStorage.getItem("receiveFirst");
     var leftDirection = localStorage.getItem("leftDirection");
     var firstDownPosition = 0;
@@ -261,32 +349,25 @@ function kickOffSetup(){
         'left': firstDownPosition + "px"
     });
 
+    setFieldPlayers();
     if(rotate){
-        document.getElementById("left-position-name").innerHTML = left;
         $('#leftTeamPosition').css({
-            'background-color': ((right == away) ? homeColor : awayColor),
             'left': (firstDownPosition - 58) + "px", 
             'top': "175px"
         });
 
-        document.getElementById("right-position-name").innerHTML = right;
         $('#rightTeamPosition').css({
-            'background-color': ((left == home) ? awayColor : homeColor),
             'left': (lineOfScrimmage - 26) + "px", 
             'top': "175px"
         });
     }
     else{
-        document.getElementById("left-position-name").innerHTML = left;
         $('#leftTeamPosition').css({
-            'background-color': ((right == away) ? homeColor : awayColor),
             'left': (lineOfScrimmage - 58) + "px", 
             'top': "175px"
         });
 
-        document.getElementById("right-position-name").innerHTML = right;
         $('#rightTeamPosition').css({
-            'background-color': ((left == home) ? awayColor : homeColor),
             'left': (firstDownPosition - 26) + "px", 
             'top': "175px"
         });
@@ -294,18 +375,66 @@ function kickOffSetup(){
     setBallHolder();
 }
 
-function setScoreboard(){  
-  if(localStorage.getItem("setupGame") !== "none"){
-    return;
-  }
-  document.getElementById("scoreboard-away").innerHTML = localStorage.getItem("away");
-  document.getElementById("scoreboard-home").innerHTML = localStorage.getItem("home");
-  document.getElementById("scoreboard-time-value").innerHTML = localStorage.getItem("time");
+function setFieldPlayers() {
+    var homeColor = localStorage.getItem("homeColor");
+    var awayColor = localStorage.getItem("awayColor");
+    var home = localStorage.getItem("home");
+    var away = localStorage.getItem("away");
 
-  document.getElementById("scoreboard-t1-tol-value").innerHTML = localStorage.getItem("t1tol");
-  document.getElementById("scoreboard-t2-tol-value").innerHTML = localStorage.getItem("t2tol");
-  document.getElementById("scoreboard-qtr-value").innerHTML = localStorage.getItem("qtr");
-  document.getElementById("scoreboard-down-value").innerHTML = localStorage.getItem("down");
-  document.getElementById("scoreboard-togo-value").innerHTML = localStorage.getItem("togo");
-  document.getElementById("scoreboard-ballon-value").innerHTML = localStorage.getItem("ballon");
+    var leftDirection = localStorage.getItem("leftDirection");
+    if(leftDirection == away){
+        document.getElementById("left-position-name").innerHTML = home;
+        $('#leftTeamPosition').css({
+            'background-color': homeColor
+        });
+
+        document.getElementById("right-position-name").innerHTML = away;
+        $('#rightTeamPosition').css({
+            'background-color': awayColor
+        });
+    }
+    else{
+        document.getElementById("left-position-name").innerHTML = away;
+        $('#leftTeamPosition').css({
+            'background-color': awayColor
+        });
+
+        document.getElementById("right-position-name").innerHTML = home;
+        $('#rightTeamPosition').css({
+            'background-color': homeColor
+        });
+
+    }
+}
+
+function setScoreboard(){  
+    if(localStorage.getItem("setupGame") !== "none"){
+        return;
+    }
+    document.getElementById("scoreboard-away").innerHTML = localStorage.getItem("away");
+    document.getElementById("scoreboard-home").innerHTML = localStorage.getItem("home");
+    document.getElementById("scoreboard-time-value").innerHTML = localStorage.getItem("time");
+
+    document.getElementById("scoreboard-t1-tol-value").innerHTML = localStorage.getItem("t1tol");
+    document.getElementById("scoreboard-t2-tol-value").innerHTML = localStorage.getItem("t2tol");
+    document.getElementById("scoreboard-qtr-value").innerHTML = localStorage.getItem("qtr");
+    document.getElementById("scoreboard-down-value").innerHTML = localStorage.getItem("down");
+    document.getElementById("scoreboard-togo-value").innerHTML = localStorage.getItem("togo");
+    document.getElementById("scoreboard-ballon-value").innerHTML = localStorage.getItem("ballon");
+
+    document.getElementById("scoreboard-away-score").innerHTML = localStorage.getItem("homeScore");
+    document.getElementById("scoreboard-home-score").innerHTML = localStorage.getItem("awayScore");
+}
+
+function addPoints(team, points) {
+    var home = localStorage.getItem("home");
+    if(team == home){
+        var score = parseInt(localStorage.getItem("homeScore")) + points;
+        localStorage.setItem("homeScore", score);
+    }
+    else{
+        var score = parseInt(localStorage.getItem("awayScore")) + points;
+        localStorage.setItem("awayScore", score);
+    }
+    setScoreboard();
 }

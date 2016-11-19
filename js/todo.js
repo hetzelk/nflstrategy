@@ -76,3 +76,7 @@ $( "#right" ).click(function() {
 with animations, ad a little football. 
 Try to add animations for a lot of movements. Such as kicks and runs, and passes. Obviously wont be easy, but it would be cool.
 */
+
+/*
+
+*/

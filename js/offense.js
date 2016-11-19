@@ -21,13 +21,21 @@ play81:"L16,L13,L10f", play82:"C14,L12,L10f", play83:"C10f,L8,L6", play84:"L82,L
 play91:"L16,L13,L10f", play92:"C14,L12,L10f", play93:"C10f,L8,L6", play94:"L82,L40,L32", play95:"L30,L22,L15", play96:"C33,L27,L20f", play97:"L91,L47,L2f"}
 };
 
-var UITesting = {
-    id:"UITesting",
-    name:"UI Testing",
-    type:"Test", 
-    desc:"Test desc", 
-    plays: { 
-    play11:"L0,C50,R-11", play12:"L-20i,C15i,R-15i", play13:"L20f,C-15f,R15f", play14:"L-20i,C15f,R-15i", play15:"L20f,C-15i,R15f"}
+var RunUITesting = {
+    id:"RunUITesting",
+    name:"Run UI Testing",
+    type:"Test",
+    desc:"Test desc",
+    plays: {
+        play11:"L7,L7,L-7", play12:"C7,C7,C-7", play13:"R7f,R-7f,R7f", play14:"R-7,R7f,R7", play15:"L7f,L-7,L7f"}
+};
+var PassUITesting = {
+    id:"PassUITesting",
+    name:"Pass UI Testing",
+    type:"Test",
+    desc:"Test desc",
+    plays: {
+        play11:"L0,C50,R-11", play12:"L-20i,C15i,R-15i", play13:"L20,C-15,R15", play14:"L-20i,C15,R-15i", play15:"L20,C-15i,R15"}
 };
 
 var Punt = {
@@ -59,4 +67,4 @@ var KickOff = {
 
 
 
-var offense = [Sweep28,UITesting,Punt,FieldGoal,KickOff];
+var offense = [Sweep28,RunUITesting,PassUITesting,Punt,FieldGoal,KickOff];

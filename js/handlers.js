@@ -43,6 +43,7 @@ function loadSettings() {
 
     $("#setup-game").css("display", localStorage.getItem("setupGame"));
     $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    setFieldPlayers();
     setScoreboard();
 }
 loadSettings();
@@ -93,26 +94,30 @@ $("#right-choice").click(function() {
 });
 
 $("#coin-flip-close").click(function() {
-  localStorage.setItem("setupGame", "none");
-  localStorage.setItem("nextPlay", "block");
-  $("#setup-game").css("display", localStorage.getItem("setupGame"));
-  $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    localStorage.setItem("setupGame", "none");
+    localStorage.setItem("nextPlay", "block");
+    $("#setup-game").css("display", localStorage.getItem("setupGame"));
+    $("#next-play").css("display", localStorage.getItem("nextPlay"));
 
-  //create base localStorage 
-  localStorage.setItem("scoreBoard", "");  
-  localStorage.setItem("time", "15:00");
-  localStorage.setItem("t1tol", "3");
-  localStorage.setItem("t2tol", "3");
-  localStorage.setItem("qtr", "1");
-  localStorage.setItem("down", "1");
-  localStorage.setItem("togo", "10");
-  localStorage.setItem("ballon", "30");
+    //create base localStorage
+    localStorage.setItem("scoreBoard", "");
+    localStorage.setItem("time", "15:00");
+    localStorage.setItem("t1tol", "3");
+    localStorage.setItem("t2tol", "3");
+    localStorage.setItem("qtr", "1");
+    localStorage.setItem("down", "1");
+    localStorage.setItem("togo", "10");
+    localStorage.setItem("ballon", "30");
+    localStorage.setItem("homeScore", "0");
+    localStorage.setItem("awayScore", "0");
   setScoreboard();
 });
 
 $("#random-bead").click(function() {
-    var beadPos = Math.floor((Math.random() * 100) + 1);
-    var beadNumber = randomBead("regular");
+    //random 1-100 bead number
+    var bead = Math.floor((Math.random() * 100) + 1);
+    //beadNumber is the outcome of
+    var beadNumber = determinePlayOutcome("regular", bead);
     validateOutcome(beadNumber);
-    setBeadPosition(beadPos);
+    setBeadPosition(bead);
 });

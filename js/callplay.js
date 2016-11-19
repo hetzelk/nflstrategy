@@ -87,10 +87,9 @@ function validateOutcome(bead) {
     displayOutcome(offenseAvailable[bead]);
 }
 
-function randomBead (playType) {
+function determinePlayOutcome(playType, bead) {
     // playType: kickoff, regular, penalty, other..?
     // 1-40, 41-45, 46-70, 71-80, 81-100
-    var bead = Math.floor((Math.random() * 100) + 1);
 
     if(playType == "regular"){
         if(bead <= 40){
@@ -109,15 +108,14 @@ function randomBead (playType) {
             return 0;
         }
     }
-
 }
 
-function displayOutcome (outcome) {
+function displayOutcome(outcome) {
     document.getElementById("outcome-display").innerHTML = outcome;
-    var hashPosition = "L";
+    var fieldPositions = (localStorage.getItem("fieldPositions")).split(",");
+    var hashPosition = fieldPositions[2];
     var hashPlay = "";
     var outcomes = ((outcome.split(":"))[1]).split(",");
-    var quote = "";
     if(hashPosition == "L"){
         hashPlay = outcomes[0];
     }
@@ -127,26 +125,18 @@ function displayOutcome (outcome) {
     else{
         hashPlay = outcomes[2];
     }
-
+    hashPosition = hashPlay.slice(0, 1);
     var yards = hashPlay.slice(1);
 
     if(yards.includes("f")){
         var yards = yards.slice(0, yards.length - 1);
-        quote += " after " + yards + " yards team 1 fumbled to team 2!";
+        fieldOutcome(yards, hashPosition);
     }
     else if(yards.includes("i")){
         var yards = yards.slice(0, yards.length - 1);
-        quote += " a " + yards + " yard pass, and it's intercepted!";
+        fieldOutcome(yards, hashPosition);
     }
     else{
-        if(yards.includes("-")){
-        quote += " for a loss of " + yards + " yards";
-        }
-        else{
-            quote += " for a gain of " + yards + " yards";
-        }
+        fieldOutcome(yards, hashPosition);
     }
-    
-
-    document.getElementById("outcome-display").innerHTML = quote;
 }

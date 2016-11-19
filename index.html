@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <div class="row">
-                <div class="col-md-10" id="menu-column">
+                <div class="col-md-9" id="menu-column">
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="#">Game</a></li>
                     <li><a href="#">Stats</a></li>
@@ -45,23 +45,21 @@
                     <li><a href="playhelper.html">Offense Creator</span></a></li>
                 </ul>
                 <div class="col-md-12" id="team-plays">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p id="offense-called" class="">Offense Call</p>
-                            <p id="defense-called" class="">Defense Call</p>
-                            <p id="outcome-display" class="">Bead</p>
-                        </div>
+                    <p id="offense-called" class="">Offense Call</p>
+                    <p id="defense-called" class="">Defense Call</p>
+                    <p id="outcome-display" class="">Bead</p>
+                </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="col-md-12">
+                        <div id="bead"></div>
                     </div>
-                </div>
-                </div>
-                <div>
-                    <div id="bead"></div>
-                    <div class="col-md-2 onebead"></div>
-                    <div class="col-md-2 twobead"></div>
-                    <div class="col-md-2 threebead"></div>
-                    <div class="col-md-2 fourbead"></div>
-                    <div class="col-md-2 fivebead"></div>
-                    <div class="col-md-2" id="bottom-bead"></div>
+                    <div class="col-md-12 onebead"></div>
+                    <div class="col-md-12 twobead"></div>
+                    <div class="col-md-12 threebead"></div>
+                    <div class="col-md-12 fourbead"></div>
+                    <div class="col-md-12 fivebead"></div>
+                    <div class="col-md-12" id="bottom-bead"></div>
                 </div>
           </div>
         </div>
@@ -223,7 +221,7 @@
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title" id="offenseModalLabel">Offense Play Choice</h4>
+                  <h4 class="modal-title" id="offenseModalLabel"><span id="offenseName"></span> (Offense) Play Choice</h4>
                 </div>
                 <div class="modal-body">
                   <div class="row">
@@ -260,7 +258,7 @@
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title" id="defenseModalLabel">Defense Play Choice</h4>
+                  <h4 class="modal-title" id="defenseModalLabel"><span id="defenseName"></span> (Defense) Play Choice</h4>
                 </div>
                 <div class="modal-body">
                   <div class="row">
