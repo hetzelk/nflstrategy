@@ -113,7 +113,7 @@ var KickReturn = {
 
 var defenseTesting = {
     id:"defenseTesting",
-    name:"defenseTesting",
+    name:"Defense Testing",
     type:"TEST", 
     desc:"test", 
     zones:"11,12,13,14,15"

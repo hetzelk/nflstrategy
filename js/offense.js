@@ -1,7 +1,5 @@
-/*
-BLUE - Run   |||   PURPLE - Screen   |||    RED - Pass
-BLUE - L     |||   RED    - C        |||  BLACK - R
-*/
+//BLUE - Run   |||   PURPLE - Screen   |||    RED - Pass
+//BLUE - L     |||   RED    - C        |||  BLACK - R
 var Sweep28 = {
     id:"Sweep28",
     name:"28 Sweep",
@@ -27,7 +25,7 @@ var RunUITesting = {
     type:"Test",
     desc:"Test desc",
     plays: {
-        play11:"L7,L7,L-7", play12:"C7,C7,C-7", play13:"R7f,R-7f,R7f", play14:"R-7,R7f,R7", play15:"L7f,L-7,L7f"}
+        play11:"L1,L1,L-1", play12:"C1,C1,C-1", play13:"R1f,R-1f,R1f", play14:"R-1,R1f,R1", play15:"L1f,L-1,L1f"}
 };
 var PassUITesting = {
     id:"PassUITesting",

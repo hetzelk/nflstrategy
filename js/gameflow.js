@@ -6,9 +6,11 @@ function setAllIfPossible() {
     else{
         setTouchDowns(); 
         setupField(); 
-        //setScoreboard();
+        setScoreboard();
+        document.getElementById("next-play").innerHTML = "Next Play";
     }
 }
+setAllIfPossible();
 
 function setupField() {
     //get current field positions from localStorage
@@ -24,8 +26,6 @@ function setupField() {
         setAllPositions(parseInt(offensePos),parseInt(firstDownPos),hashPos);
     }
 }
-
-setAllIfPossible();
 
 function setTouchDowns() {
   if(localStorage.getItem("setupGame") !== "none"){
@@ -159,19 +159,32 @@ function fieldOutcome(yards, hashPosition) {
     var currentOffensePos = fieldPositions[0];
     var currentFirstDownPos = fieldPositions[1];
 
+    var down = parseInt(localStorage.getItem("down"));
+
     var finalLOS = 0;
+    var togo = 10;
     var finalFirstDown = currentFirstDownPos;
 
     var quote = "";
 
     if(currentOffense == leftTeam){
-        //console.log("LLL " + currentOffense, leftTeam);
         finalLOS = (parseInt(currentOffensePos) + parseInt(yards));
         if(finalLOS >= currentFirstDownPos){
             finalFirstDown = finalLOS + 10;
+            down = 1;
             if(finalFirstDown >= 100){
                 finalFirstDown = 100;
             }
+        }
+        else{
+            togo = finalFirstDown - finalLOS;
+            down++;
+        }
+        if(down > 4){
+            down = 1;
+            togo = 10;
+            finalFirstDown = finalLOS - 10;
+            localStorage.setItem("currentOffense", rightTeam);
         }
         if(finalLOS >= 100){
             addPoints(leftTeam, 6);
@@ -185,13 +198,23 @@ function fieldOutcome(yards, hashPosition) {
         }
     }
     else/*currentOffense == rightTeam*/{
-        //console.log("RRR " + currentOffense, rightTeam);
         finalLOS = (parseInt(currentOffensePos) - parseInt(yards));
         if(finalLOS <= currentFirstDownPos){
             finalFirstDown = finalLOS - 10;
+            down = 1;
             if(finalFirstDown <= 0){
                 finalFirstDown = 0;
             }
+        }
+        else{
+            togo = finalLOS - finalFirstDown;
+            down++;
+        }
+        if(down > 4){
+            down = 1;
+            togo = 10;
+            finalFirstDown = finalLOS + 10;
+            localStorage.setItem("currentOffense", leftTeam);
         }
         if(finalLOS >= 100){
             addPoints(leftTeam, 2);
@@ -208,6 +231,8 @@ function fieldOutcome(yards, hashPosition) {
     //set to new positions
     localStorage.setItem("fieldPositions", finalLOS + "," + finalFirstDown + "," + hashPosition);
     localStorage.setItem("ballon", finalLOS);
+    localStorage.setItem("togo", togo);
+    localStorage.setItem("down", down);
     setAllPositions(finalLOS, finalFirstDown, hashPosition);
 
     document.getElementById("outcome-display").innerHTML = quote;
@@ -455,12 +480,12 @@ function addPoints(team, points) {
 $("#twoPTSetup").click(function() {
     if(localStorage.getItem("fieldPositions").match("^100")){
         localStorage.setItem("fieldPositions", "98,100,C");
-        localStorage.setItem("ballon", 98);
+        localStorage.setItem("ballon", "98");
         setAllPositions(98, 100, "C");
     }
     else{
         localStorage.setItem("fieldPositions", "2,2,C");
-        localStorage.setItem("ballon", 2);
+        localStorage.setItem("ballon", "2");
         setAllPositions(2, 0, "C");
     }
     setScoreboard();
@@ -469,12 +494,12 @@ $("#twoPTSetup").click(function() {
 $("#fieldGoalSetup").click(function() {
     if(localStorage.getItem("fieldPositions").match("^100")){
         localStorage.setItem("fieldPositions", "98,100,C");
-        localStorage.setItem("ballon", 98);
+        localStorage.setItem("ballon", "98");
         setAllPositions(98, 100, "C");
     }
     else{
         localStorage.setItem("fieldPositions", "2,2,C");
-        localStorage.setItem("ballon", 2);
+        localStorage.setItem("ballon", "2");
         setAllPositions(2, 0, "C");
     }
     setScoreboard();
