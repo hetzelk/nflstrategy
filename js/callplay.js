@@ -33,7 +33,6 @@ $(".offense-choice").click(function() {
     var result = returnPlayId(offense, clickedItem);
     var plays =  result.name + "<br>" + result.type + "<br>" + result.desc;
 
-    document.getElementById("offense-select").innerHTML = result.name;
     document.getElementById("offense-called").innerHTML = result.name;
     document.getElementById("show-offense-play").innerHTML = plays;
     $("#offense-continue").removeClass("disabled");
@@ -45,7 +44,6 @@ $(".defense-choice").click(function() {
     var result = returnPlayId(defense, clickedItem);
     var plays =  result.name + "<br>" + result.type + "<br>" + result.desc;
 
-    document.getElementById("defense-select").innerHTML = result.name;
     document.getElementById("defense-called").innerHTML = result.name;
     document.getElementById("show-defense-play").innerHTML = plays;
     $("#defense-continue").removeClass("disabled");
@@ -53,11 +51,33 @@ $(".defense-choice").click(function() {
     $("#defense-called").removeClass("none");
     localStorage.setItem("defensePlay", result.id);
     document.getElementById("next-play").innerHTML = "Next Play";
+    localStorage.setItem("playType", "regular");
 });
 
 $("#next-play").click(function() {
-    document.getElementById("offense-select").innerHTML = "Offense";
-    document.getElementById("defense-select").innerHTML = "Defense";
+    /*
+    var playType = localStorage.getItem("playType");
+    if(playType == "regular"){
+        $('#offense-modal').modal('show');
+    }
+    else if(playType == undefined){
+        /*this is the default
+         * setup game modal*
+        $('#settings-modal').modal('show');
+    }
+    else if(playType == "kickOff"){
+     /*this is for when it's a kickoff*
+        $('#offense-modal').modal('show');
+    }
+    else{
+        /*this is for when a user clicks out of the modal before the play is called.
+         * then the wrong play wont be selected*
+        $('#points-modal').modal('show');
+    }*/
+
+    /*if next play is kickoff, display kickoff
+    * or display point modal if accidentally clicked away
+    * or display other possibilities*/
     $("#offense-called").addClass("none");
     $("#defense-called").addClass("none");
 });
@@ -88,10 +108,11 @@ function validateOutcome(bead) {
 }
 
 function determinePlayOutcome(playType, bead) {
-    // playType: kickoff, regular, penalty, other..?
+    // playType: kickoff, regular, penalty, fieldGoal, twoPointConversion..?
     // 1-40, 41-45, 46-70, 71-80, 81-100
+    //RETURN: the number that is returned here goes to validateOutcome(bead);
 
-    if(playType == "regular"){
+    if(playType == "regular" || playType == "twoPointConversion"){
         if(bead <= 40){
             return 4;
         }
@@ -108,10 +129,22 @@ function determinePlayOutcome(playType, bead) {
             return 0;
         }
     }
+    else if(playType == "fieldGoal" || playType == "extraPoint"){
+
+    }
+    else if(playType == "kickOff" || playType == "punt"){
+
+    }
+    else if(playType == "penalty"){
+
+    }
+    else /*kickoff*/{
+        console.log("should never get here");
+    }
 }
 
 function displayOutcome(outcome) {
-    document.getElementById("outcome-display").innerHTML = outcome;
+    document.getElementById("outcome-display").innerHTML = "Remember to adjust for the yards if a touchdown is scored " + outcome;
     var fieldPositions = (localStorage.getItem("fieldPositions")).split(",");
     var hashPosition = fieldPositions[2];
     var hashPlay = "";
@@ -128,15 +161,5 @@ function displayOutcome(outcome) {
     hashPosition = hashPlay.slice(0, 1);
     var yards = hashPlay.slice(1);
 
-    if(yards.includes("f")){
-        var yards = yards.slice(0, yards.length - 1);
-        fieldOutcome(yards, hashPosition);
-    }
-    else if(yards.includes("i")){
-        var yards = yards.slice(0, yards.length - 1);
-        fieldOutcome(yards, hashPosition);
-    }
-    else{
-        fieldOutcome(yards, hashPosition);
-    }
+    fieldOutcome(yards, hashPosition);
 }

@@ -33,7 +33,15 @@ var PassUITesting = {
     type:"Test",
     desc:"Test desc",
     plays: {
-        play11:"L0,C50,R-11", play12:"L-20i,C15i,R-15i", play13:"L20,C-15,R15", play14:"L-20i,C15,R-15i", play15:"L20,C-15i,R15"}
+        play11:"L0,C20,R-11", play12:"L20i,C15i,R15i", play13:"L20,C15,R15", play14:"L20i,C15,R15i", play15:"L20,C15i,R15"}
+};
+var TurnoverTesting = {
+    id:"TurnoverTesting",
+    name:"Turnover UI Testing",
+    type:"Test",
+    desc:"Test desc",
+    plays: {
+        play11:"L0i,C20i,R-11i", play12:"L20i,C15i,R15i", play13:"L20f,C15f,R15f", play14:"L20i,C15i,R15i", play15:"L20f,C15f,R15f"}
 };
 
 var Punt = {
@@ -65,4 +73,4 @@ var KickOff = {
 
 
 
-var offense = [Sweep28,RunUITesting,PassUITesting,Punt,FieldGoal,KickOff];
+var offense = [Sweep28,RunUITesting,PassUITesting,TurnoverTesting,Punt,FieldGoal,KickOff];

@@ -24,7 +24,7 @@
           <a class="nav-item nav-link" data-toggle="modal" data-target="#settings-modal" id="setup-game-banner" href="#">Settings</a>
           <a class="nav-item nav-link" href="#">Help</a>
           <a class="nav-item nav-link" href="#"> | &nbsp; Made in 1978, Remastered in 2016</a>
-          <a class="nav-item nav-link" id="example-setup">Quick Start</a>
+            <a class="nav-item nav-link" id="example-setup">Quick Start</a>
         </nav>
       </div>
     </nav>
@@ -56,12 +56,12 @@
                     <div class="col-md-12">
                         <div id="bead"></div>
                     </div>
-                    <div class="col-md-12 onebead"></div>
-                    <div class="col-md-12 twobead"></div>
-                    <div class="col-md-12 threebead"></div>
-                    <div class="col-md-12 fourbead"></div>
-                    <div class="col-md-12 fivebead"></div>
-                    <div class="col-md-12" id="bottom-bead"></div>
+                    <div class="beadClick col-md-12 onebead"></div>
+                    <div class="beadClick col-md-12 twobead"></div>
+                    <div class="beadClick col-md-12 threebead"></div>
+                    <div class="beadClick col-md-12 fourbead"></div>
+                    <div class="beadClick col-md-12 fivebead"></div>
+                    <div class="beadClick col-md-12" id="bottom-bead"></div>
                 </div>
           </div>
         </div>
@@ -79,9 +79,9 @@
                 <div class="col-md-6 text-center">
                   <div id="scoreboard-time"><span id="scoreboard-time-value">15:00</span></div>
                   <div>
-                    <div class="col-md-4 text-center" id="scoreboard-away-tol"><span id="scoreboard-t1-tol-value">3</span> TOL</div>
+                    <div class="col-md-4 text-center" id="scoreboard-away-tol"><span id="scoreboard-away-tol-value">3</span> TOL</div>
                     <div class="col-md-4 text-center" id="scoreboard-quarter">QTR: <span id="scoreboard-qtr-value">1</span></div>
-                    <div class="col-md-4 text-center" id="scoreboard-home-tol">TOL <span id="scoreboard-t2-tol-value">3</span></div>
+                    <div class="col-md-4 text-center" id="scoreboard-home-tol">TOL <span id="scoreboard-home-tol-value">3</span></div>
                   </div>
                 </div>
                 <div class="col-md-3 text-right"><span id="scoreboard-home">HOME</span><br>
@@ -116,13 +116,7 @@
                       <input type="text" id="home-name">
                       <br>
                       <span><span id="home-color-name">Home</span> Color: </span>
-                      <select class="color-select" id="home-color">
-                        <option></option>
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
-                        <option value="blue">Blue</option>
-                        <option value="orange">Orange</option>
-                      </select>
+                        <input type="color" value="#e60000" id="home-color-input">
                     </div>
 
                     <div class="col-md-6">
@@ -130,13 +124,7 @@
                       <input type="text" id="away-name">
                       <br>
                       <span><span id="away-color-name">Away</span> Color: </span>
-                      <select class="color-select" id="away-color">
-                        <option></option>
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
-                        <option value="blue">Blue</option>
-                        <option value="orange">Orange</option>
-                      </select>
+                        <input type="color" value="#3125c0" id="away-color-input">
                       <br>
                       <span>Computer Player?</span>
                       <br>
@@ -163,8 +151,9 @@
 
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" id="clear-all" data-dismiss="modal">Clear Settings</button>
-                  <button type="button" class="btn btn-success" id="save-settings" data-toggle="modal" data-target="#coin-flip-modal" data-dismiss="modal" >Save Settings</button>
+                    <button type="button" class="btn btn-warning" id="make-correction" data-toggle="modal" data-target="#correction-modal" data-dismiss="modal">Make Correction</button>
+                    <button type="button" class="btn btn-danger" id="clear-all" data-dismiss="modal">Clear Settings</button>
+                    <button type="button" class="btn btn-success" id="save-settings" data-toggle="modal" data-dismiss="modal" >Save Settings</button>
                 </div>
               </div>
             </div>
@@ -214,22 +203,94 @@
             </div>
           </div>
 
+            <!-- Correction modal -->
+            <div class="modal fade" id="correction-modal" tabindex="-1" role="dialog" aria-labelledby="correctionLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="correctionLabel">Make Game Correction</h4>
+                        </div>
+                        <div class="modal-body settings-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group row">
+                                        <label for="correction-currentOffense" class="col-xs-2 col-form-label">Offense:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-currentOffense"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-time" class="col-xs-2 col-form-label">Time:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-time"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-homeScore" class="col-xs-2 col-form-label">Home Score:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-homeScore"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-awayScore" class="col-xs-2 col-form-label">Away Score:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-awayScore"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-hometol" class="col-xs-2 col-form-label">Home TOL:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-hometol"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group row">
+                                        <label for="correction-awaytol" class="col-xs-2 col-form-label">Away TOL:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-awaytol"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-qtr" class="col-xs-2 col-form-label">QTR:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-qtr"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-down" class="col-xs-2 col-form-label">Down:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-down"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-togo" class="col-xs-2 col-form-label">To Go:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-togo"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="correction-ballon" class="col-xs-2 col-form-label">Ball On:</label>
+                                        <div class="col-xs-10"><input class="form-control" type="text" id="correction-ballon"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="correction-exit" data-dismiss="modal">Exit</button>
+                            <button type="button" class="btn btn-success" id="save-correction-close" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Touchdown modal -->
-            <div class="modal fade" id="touchdown-modal" tabindex="-1" role="dialog" aria-labelledby="touchdownLabel" aria-hidden="true">
+            <div class="modal fade" id="points-modal" tabindex="-1" role="dialog" aria-labelledby="pointLabel" aria-hidden="true">
                 <div class="modal-dialog modal-md" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title" id="touchdownLabel">Touchdown</h4>
+                            <h4 class="modal-title" id="pointLabel">Touchdown</h4>
                         </div>
                         <div class="modal-body settings-body">
-                            <div class="row" id="">
-                                <p>scoring</p>
-                                <p>touchdown</p>
-                                <p>field goal</p>
-                                <p>safety</p>
+                            <div class="row">
+                                <p id="scoreQuote"></p>
+                                <p><b>Quote Options: </b></p>
+                                <h4>RedBlue scored a touchdown!</h4>
+                                <h2>+6</h2>
+                                <h4>RedBlue got the extra point!</h4>
+                                <h2>+1</h2>
+                                <h4>RedBlue scored a field goal!</h4>
+                                <h2>+3</h2>
+                                <h4>BlueRed got a safety on RedBlue!</h4>
+                                <h2>+2</h2>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -258,13 +319,10 @@
                 <div class="modal-body">
                   <div class="row">
                     <div class="offense-group col-md-4">
-                      <div class="btn-group">
-                        <button type="button" id="offense-select" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Offense
-                        </button>
-                        <div class="dropdown-menu" id="offense-dropdown-menu">
-                        </div>
-                      </div>
+                        <br>
+                        <select size="15" class="select-box customPlaySelect" id="offense-select-box">
+
+                        </select>
                     </div>
                     <div class="col-md-8" id="show-offense-details">
                       <div class="play-details">
@@ -295,31 +353,10 @@
                 <div class="modal-body">
                   <div class="row">
                     <div class="defense-group col-md-4">
-                      <div class="btn-group">
-                        <button type="button" id="defense-select" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Defense
-                        </button>
                         <br>
-                        Defense
-                        <select size="10" class="select-box" id="select10Dropdown">
-                         <option class="select-hover">4-2 Key Safety X Combo</option>
-                          <optgroup label="4-3 asd">
-                           <option class="select-hover" value="Running">Running</option>
-                           <option class="select-hover" value="Paragliding">Paragliding</option>
-                           <option class="select-hover" value="Swimming">Swimming</option>
-                          </optgroup>
-                         <option class="select-hover">2</option>
-                         <option class="select-hover">3</option>
-                         <option class="select-hover">4</option>
-                         <option class="select-hover">4</option>
-                         <option class="select-hover">6</option>
-                         <option class="select-hover">4</option>
-                         <option class="select-hover">4</option>
-                         <option class="select-hover">4</option>
+                        <select size="15" class="select-box customPlaySelect" id="defense-select-box">
+
                         </select>
-                        <div class="dropdown-menu" id="defense-dropdown-menu">
-                        </div>
-                      </div>
                     </div>
                     <div class="col-md-8" id="show-defense-details">
                       <div class="play-details">
@@ -402,9 +439,9 @@
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!-- Placed at the end of the document so the pages load faster
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script> -->
+    <script src="js/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/offense.js"></script>
@@ -412,15 +449,7 @@
     <script src="js/gameflow.js"></script>
     <script src="js/handlers.js"></script>
     <script src="js/callplay.js"></script>
-
     <script type="text/javascript">
-    //eventually remove this, these are settings so I can page refresh and reset settings as I need be
-/*
-    localStorage.setItem("setupGame", "block");
-    localStorage.setItem("nextPlay", "none");
-    $("#setup-game").css("display", localStorage.getItem("setupGame"));
-    $("#next-play").css("display", localStorage.getItem("nextPlay"));
-    */
     </script>
   </body>
 </html>

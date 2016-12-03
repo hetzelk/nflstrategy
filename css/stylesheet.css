@@ -148,14 +148,14 @@ this is only for my offense creator
 }
 
 .oneTenth{
-  background-color: gray;
+  background-color: green;
   height: 150px;
   border-right: 2px solid white;
   border-left: 2px solid white; 
 }
 
 .oneTenthCenter{
-  background-color: gray;
+  background-color: green;
   height: 75px;
   border-top: 2px dashed white;
   border-bottom: 2px dashed white; 
@@ -164,14 +164,14 @@ this is only for my offense creator
 }
 
 .oneTenthCenterRightEnd{
-  background-color: gray;
+  background-color: green;
   height: 75px;
   border-right: 2px solid white;
   border-left: 2px solid white; 
 }
 
 .oneTenthCenterLeftEnd{
-  background-color: gray;
+  background-color: green;
   height: 75px;
   border-right: 2px solid white;
   border-left: 2px solid white; 
@@ -369,7 +369,7 @@ this is only for my offense creator
   font-size: 1.3em;
   color: white;
 }
-#scoreboard-t1-tol-value{
+#scoreboard-away-tol-value{
   font-size: 1.3em;
   color: yellow;
 }
@@ -377,7 +377,7 @@ this is only for my offense creator
   font-size: 1.3em;
   color: white;
 }
-#scoreboard-t2-tol-value{
+#scoreboard-home-tol-value{
   font-size: 1.3em;
   color: yellow;
 }
@@ -424,12 +424,21 @@ this is only for my offense creator
     padding-right: 40px;
 }
 
-.select-box{
-  font-size:1.2em;
+.customPlaySelect{
+    font-size:1.2em;
+    width:100%;
 }
-
-.select-hover:hover{
-  background-color:black;
+.offense-choice:hover{
+    background-color:lightgreen;
+}
+.defense-choice:hover{
+    background-color:lightcoral;
+}
+.offense-choice:checked{
+    background-color:lightgreen;
+}
+.defense-choice:checked{
+    background-color:lightcoral;
 }
 
 #bead{
