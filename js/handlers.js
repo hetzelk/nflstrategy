@@ -145,12 +145,13 @@ $(function() {
 });
 
 function callRandomBead() {
-    //random 1-100 bead number
     var bead = Math.floor((Math.random() * 100) + 1);
-    //beadNumber is the outcome of
     var playType = localStorage.getItem("playType");
     var beadNumber = determinePlayOutcome(playType, bead);
-    validateOutcome(beadNumber);
+    // Kick plays handle their own outcome internally and return null
+    if(beadNumber !== null && beadNumber !== undefined){
+        validateOutcome(beadNumber);
+    }
     setBeadPosition(bead);
 }
 
@@ -229,4 +230,14 @@ $("#example-setup").click(function() {
     kickOffSetup();
 });
 
-var wordsie = "asdfghjkl";
+// Timeout buttons in offense/defense modals
+$(document).on("click", ".btn-timeout", function() {
+    var currentOffense = localStorage.getItem("currentOffense");
+    callTimeout(currentOffense);
+});
+
+// New Game button on game-end modal
+$("#new-game-btn").click(function() {
+    localStorage.clear();
+    location.reload();
+});

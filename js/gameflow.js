@@ -249,12 +249,22 @@ function fieldOutcome(yards, hashPosition) {
         }
     }
     if(fumble || interception){
-        //switch offense and first down
-        //TODO somewhere in here, the first down isn't being set properly.
         quote += "turnover : yards " + yards;
         console.log(quote);
         down = 1;
         togo = 10;
+        // After turnover, the new offense drives the opposite direction.
+        // Recalculate firstDown 10 yards ahead for the new ball-carrier's direction.
+        var newOffense = (currentOffense == leftTeam) ? rightTeam : leftTeam;
+        if(newOffense == leftTeam){
+            // new offense drives right (increasing yards)
+            finalFirstDown = finalLOS + 10;
+            if(finalFirstDown > 100) finalFirstDown = 100;
+        } else {
+            // new offense drives left (decreasing yards)
+            finalFirstDown = finalLOS - 10;
+            if(finalFirstDown < 0) finalFirstDown = 0;
+        }
         turnOver();
     }
     //set to new positions
@@ -270,6 +280,11 @@ function fieldOutcome(yards, hashPosition) {
     }
 
     document.getElementById("outcome-display").innerHTML = quote;
+
+    // Deduct game clock. Incomplete passes (0 yards, no turnover, pass play) stop clock.
+    var playType = localStorage.getItem("playType");
+    var incomplete = (!fumble && !interception && parseInt(yards) === 0 && playType !== "regular");
+    deductPlayTime(incomplete);
 }
 
 function setAllPositions(offenseYds, firstYds, hashPosition) {
@@ -500,8 +515,8 @@ function setScoreboard(){
     }
     document.getElementById("scoreboard-ballon-value").innerHTML = ballon;
 
-    document.getElementById("scoreboard-away-score").innerHTML = localStorage.getItem("homeScore");
-    document.getElementById("scoreboard-home-score").innerHTML = localStorage.getItem("awayScore");
+    document.getElementById("scoreboard-away-score").innerHTML = localStorage.getItem("awayScore");
+    document.getElementById("scoreboard-home-score").innerHTML = localStorage.getItem("homeScore");
 }
 
 function addPoints(team, points) {
