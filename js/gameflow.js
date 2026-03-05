@@ -529,24 +529,49 @@ function addPoints(team, points) {
         var score = parseInt(localStorage.getItem("awayScore")) + points;
         localStorage.setItem("awayScore", score);
     }
-
-    if(points == 1){
-        //PAT
-    }
-    else if(points == 2){
-        //safety
-    }
-    else if(points == 6){
-        //touchdown
-    }
-
-    setTimeout(function(){
-        $('#points-modal').modal('show')
-    }, 1500);
     setScoreboard();
+
+    // Build modal content based on scoring event
+    var title = "";
+    var desc = "";
+    var valueStr = "+" + points;
+
     if(points == 6){
+        title = "TOUCHDOWN!";
+        desc = team + " scored a touchdown!";
+        // Show PAT choice buttons
+        $("#twoPTSetup").show();
+        $("#fieldGoalSetup").show();
         setNextStep(team + " scored a TD — choose PAT or 2-pt conversion");
     }
+    else if(points == 3){
+        title = "Field Goal!";
+        desc = team + " made the field goal!";
+        // No PAT needed after FG — handled by handleKickAttempt, hide buttons
+        $("#twoPTSetup").hide();
+        $("#fieldGoalSetup").hide();
+    }
+    else if(points == 2){
+        title = "Safety!";
+        desc = team + " scored a safety!";
+        $("#twoPTSetup").hide();
+        $("#fieldGoalSetup").hide();
+    }
+    else if(points == 1){
+        title = "Extra Point!";
+        desc = team + " made the extra point!";
+        $("#twoPTSetup").hide();
+        $("#fieldGoalSetup").hide();
+    }
+
+    document.getElementById("pointLabel").innerHTML = title;
+    document.getElementById("points-team-name").innerHTML = team;
+    document.getElementById("points-event-desc").innerHTML = desc;
+    document.getElementById("points-value").innerHTML = valueStr;
+
+    setTimeout(function(){
+        $('#points-modal').modal('show');
+    }, 1500);
 }
 
 $("#twoPTSetup").click(function() {

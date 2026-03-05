@@ -281,28 +281,19 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title" id="pointLabel">Touchdown</h4>
+                            <h4 class="modal-title" id="pointLabel">Score!</h4>
                         </div>
-                        <div class="modal-body settings-body">
-                            <div class="row">
-                                <p id="scoreQuote"></p>
-                                <p><b>Quote Options: </b></p>
-                                <h4>RedBlue scored a touchdown!</h4>
-                                <h2>+6</h2>
-                                <h4>RedBlue got the extra point!</h4>
-                                <h2>+1</h2>
-                                <h4>RedBlue scored a field goal!</h4>
-                                <h2>+3</h2>
-                                <h4>BlueRed got a safety on RedBlue!</h4>
-                                <h2>+2</h2>
-                            </div>
+                        <div class="modal-body text-center">
+                            <h3 id="points-team-name"></h3>
+                            <h4 id="points-event-desc"></h4>
+                            <h1 id="points-value"></h1>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="points-modal-footer">
                             <div class="offset-sm-2 col-sm-3">
                                 <button type="button" class="btn btn-danger" id="twoPTSetup" data-dismiss="modal">2-PT Conversion</button>
                             </div>
                             <div class="offset-sm-1 col-sm-3">
-                                <button type="button" class="btn btn-warning" id="fieldGoalSetup" data-dismiss="modal">Field Goal</button>
+                                <button type="button" class="btn btn-warning" id="fieldGoalSetup" data-dismiss="modal">PAT (Kick)</button>
                             </div>
                         </div>
                     </div>

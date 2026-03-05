@@ -490,6 +490,22 @@ this is only for my offense creator
     margin:0 auto;
 }
 
+/* Points modal */
+#points-team-name {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+#points-event-desc {
+    color: #555;
+    margin-bottom: 10px;
+}
+#points-value {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #28a745;
+}
+
 /* Quick test play button */
 #quick-test-play {
     display: block;
