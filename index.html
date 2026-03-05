@@ -26,6 +26,10 @@
           <a class="nav-item nav-link" href="#"> | &nbsp; Made in 1978, Remastered in 2016</a>
             <a class="nav-item nav-link" id="example-setup">Quick Start</a>
         </nav>
+        <div id="next-step-bar">
+          <span id="next-step-label">NEXT:</span>
+          <span id="next-step-text">Setup game to begin</span>
+        </div>
       </div>
     </nav>
 
@@ -49,7 +53,8 @@
                     <p><b>Called Plays: </b></p>
                     <p id="offense-called" class="">Offense Call</p>
                     <p id="defense-called" class="">Defense Call</p>
-                    <p>Yards: <span id="outcome-display">-</span></p>
+                    <hr id="outcome-divider">
+                    <p id="outcome-display">—</p>
                 </div>
                 </div>
                 <div class="col-md-2">
@@ -70,6 +75,8 @@
             <div class="col-md-2">
               <button class="btn btn-primary" data-toggle="modal" data-target="#settings-modal" id="setup-game">Setup Game</button>
               <button class="btn btn-success none" data-toggle="modal" data-target="#offense-modal" id="next-play">Kick Off</button>
+              <button class="btn btn-warning none" id="quick-test-play">⚡ Test Play</button>
+              <button class="btn btn-danger" id="random-bead">Random Bead</button>
             </div>
             <div class="col-md-8 squarefont" id="scoreboard">
               <div class="row">
@@ -93,9 +100,6 @@
                 <div class="col-md-4 text-center" id="scoreboard-togo"><span id="scoreboard-togo-value">-</span> TO GO</div>
                 <div class="col-md-4 text-right" id="scoreboard-ballon">BALL ON <span id="scoreboard-ballon-value">50</span></div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <button class="btn btn-danger" id="random-bead"> Random Bead </button>
             </div>
           </div>
 

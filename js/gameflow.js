@@ -1,13 +1,24 @@
+function setNextStep(text) {
+    var el = document.getElementById("next-step-text");
+    if(el) el.innerHTML = text;
+}
+
 function setAllIfPossible() {
-    if(localStorage.getItem("setupGame") !== "none"){
-        setAllPositions(50, 50, "C");
+    var setupGame = localStorage.getItem("setupGame");
+    if(setupGame !== "none"){
+        // No game in progress yet — nothing to render
         return;
     }
-    else{
-        setTouchDowns(); 
-        setupField(); 
-        setScoreboard();
-        document.getElementById("next-play").innerHTML = "Next Play";
+    setTouchDowns();
+    setupField();
+    setScoreboard();
+    document.getElementById("next-play").innerHTML = "Next Play";
+    var offense = localStorage.getItem("currentOffense");
+    var playType = localStorage.getItem("playType");
+    if(playType == "kickOff"){
+        setNextStep(offense + " — roll the bead (kickoff)");
+    } else {
+        setNextStep(offense + " — call your offense");
     }
 }
 setAllIfPossible();
@@ -15,6 +26,7 @@ setAllIfPossible();
 function setupField() {
     //get current field positions from localStorage
     var fieldPositions = localStorage.getItem("fieldPositions");
+    if(!fieldPositions) return;
     fieldPositions = fieldPositions.split(",");
     var offensePos = fieldPositions[0];
     var firstDownPos = fieldPositions[1];
@@ -45,12 +57,12 @@ function setBallHolder() {
     var currentOffense = localStorage.getItem("currentOffense");
     var defenseName = "";
     if(currentOffense == localStorage.getItem("leftDirection")){
-    document.getElementById("left-ball").innerHTML = "";
-    document.getElementById("right-ball").innerHTML = "o";
+        document.getElementById("left-ball").innerHTML = "";
+        document.getElementById("right-ball").innerHTML = "o";
     }
     else{
-    document.getElementById("left-ball").innerHTML = "o";
-    document.getElementById("right-ball").innerHTML = "";
+        document.getElementById("left-ball").innerHTML = "o";
+        document.getElementById("right-ball").innerHTML = "";
     }
 
     if(currentOffense == localStorage.getItem("away")){
@@ -71,56 +83,42 @@ function playChoiceNames(offenseName, defenseName){
     document.getElementById("defenseName").innerHTML = defenseName;
 }
 
-function createOffenseChoices() {
-    var offenseSelectBox = "";
-    for (var i = 0; i < offense.length; i++) {
-        var j = i;
-        //if count = first, then first, else (if count = total length = total length, else, count -1)
-        var prev = (i == 0) ? 0 : ((i == offense.length) ? (offense.length - 1) : j - 1);
-        var prevOffenseType = offense[prev].type;
-        var offenseType = offense[i].type;
-        if(i == 0){
-            offenseSelectBox += "<optgroup label=" + offense[i].type + ">";
-        }
-        else if(offenseType !== prevOffenseType){
-            offenseSelectBox += "</optgroup>";
-            offenseSelectBox += "<optgroup label=" + offense[i].type + ">";
-        }
-        if(/*if meets disabled requirements*/false){
-            offenseSelectBox += "<option class=\"offense-choice disabled\" id=" + offense[i].id + ">" + offense[i].name + "</option>";
-        }
-        else{
-            offenseSelectBox += "<option class=\"offense-choice\" id=" + offense[i].id + ">" + offense[i].name + "</option>";
-        }
-    };
+function buildPlaySelectHTML(plays, choiceClass) {
+    var html = "";
+    var tagOrder = ["Test", "Game"];
+    tagOrder.forEach(function(tag) {
+        var tagPlays = plays.filter(function(p){ return p.tag === tag; });
+        if(tagPlays.length === 0) return;
 
-    document.getElementById("offense-select-box").innerHTML = offenseSelectBox;
+        var lastType = null;
+        var openGroup = false;
+        var openTag = false;
+
+        tagPlays.forEach(function(play) {
+            if(!openTag){
+                html += "<optgroup class=\"tag-header tag-" + tag.toLowerCase() + "\" label=\"── " + tag.toUpperCase() + " PLAYS ──\" disabled>";
+                html += "</optgroup>";
+                openTag = true;
+            }
+            if(play.type !== lastType){
+                if(openGroup) html += "</optgroup>";
+                html += "<optgroup class=\"type-group-" + tag.toLowerCase() + "\" label=\"  " + play.type + "\">";
+                openGroup = true;
+                lastType = play.type;
+            }
+            html += "<option class=\"" + choiceClass + " play-tag-" + tag.toLowerCase() + "\" id=\"" + play.id + "\">" + play.name + "</option>";
+        });
+        if(openGroup) html += "</optgroup>";
+    });
+    return html;
+}
+
+function createOffenseChoices() {
+    document.getElementById("offense-select-box").innerHTML = buildPlaySelectHTML(offense, "offense-choice");
 }
 
 function createDefenseChoices() {
-    var defenseSelectBox = "";
-    for (var i = 0; i < defense.length; i++) {
-        var j = i;
-        //if count = first, then first, else (if count = total length = total length, else, count -1)
-        var prev = (i == 0) ? 0 : ((i == defense.length) ? (defense.length - 1) : j - 1);
-        var prevDefenseType = defense[prev].type;
-        var defenseType = defense[i].type;
-        if(i == 0){
-            defenseSelectBox += "<optgroup label=" + defense[i].type + ">";
-        }
-        else if(defenseType !== prevDefenseType){
-            defenseSelectBox += "</optgroup>";
-            defenseSelectBox += "<optgroup label=" + defense[i].type + ">";
-        }
-        if(/*this meets disabled arguments, then disable the button*/false){
-            defenseSelectBox += "<option class=\"defense-choice\" id=" + defense[i].id + ">" + defense[i].name + "</option>";
-        }
-        else{
-            defenseSelectBox += "<option class=\"defense-choice\" id=" + defense[i].id + ">" + defense[i].name + "</option>";
-        }
-    };
-
-    document.getElementById("defense-select-box").innerHTML = defenseSelectBox;
+    document.getElementById("defense-select-box").innerHTML = buildPlaySelectHTML(defense, "defense-choice");
 }
 
 createOffenseChoices();
@@ -176,9 +174,11 @@ function fieldOutcome(yards, hashPosition) {
         finalLOS = (parseInt(currentOffensePos) + parseInt(yards));
         if(finalLOS >= currentFirstDownPos){
             if(fumble || interception){
+                // turnover — new offense (rightTeam) drives left; recalc below handles this
                 finalFirstDown = finalLOS - 10;
             }
             else{
+                // first down — left team drives right, so next first down is 10 yds ahead (increasing)
                 finalFirstDown = finalLOS + 10;
             }
             down = 1;
@@ -196,6 +196,7 @@ function fieldOutcome(yards, hashPosition) {
         if(down > 4){
             down = 1;
             togo = 10;
+            // turnover on downs — right team takes over driving left
             finalFirstDown = finalLOS - 10;
             localStorage.setItem("currentOffense", rightTeam);
         }
@@ -214,10 +215,12 @@ function fieldOutcome(yards, hashPosition) {
         finalLOS = (parseInt(currentOffensePos) - parseInt(yards));
         if(finalLOS <= currentFirstDownPos){
             if(fumble || interception){
-                finalFirstDown = finalLOS - 10;
+                // turnover — new offense (leftTeam) drives right; recalc below handles this
+                finalFirstDown = finalLOS + 10;
             }
             else{
-                finalFirstDown = finalLOS + 10;
+                // first down — right team drives left, so next first down is 10 yds ahead (decreasing)
+                finalFirstDown = finalLOS - 10;
             }
             down = 1;
             if(finalFirstDown <= 0){
@@ -234,6 +237,7 @@ function fieldOutcome(yards, hashPosition) {
         if(down > 4){
             down = 1;
             togo = 10;
+            // turnover on downs — left team takes over driving right
             finalFirstDown = finalLOS + 10;
             localStorage.setItem("currentOffense", leftTeam);
         }
@@ -272,14 +276,7 @@ function fieldOutcome(yards, hashPosition) {
     localStorage.setItem("ballon", finalLOS);
     localStorage.setItem("togo", togo);
     localStorage.setItem("down", down);
-    if(fumble || interception){
-        setAllPositions(finalLOS, finalFirstDown, hashPosition);
-    }
-    else{
-        setAllPositions(finalLOS, finalFirstDown, hashPosition);
-    }
-
-    document.getElementById("outcome-display").innerHTML = quote;
+    setAllPositions(finalLOS, finalFirstDown, hashPosition);
 
     // Deduct game clock. Incomplete passes (0 yards, no turnover, pass play) stop clock.
     var playType = localStorage.getItem("playType");
@@ -333,11 +330,11 @@ function setField(offensePos, firstDownPos, hashPosition) {
 
     //need to add more logic here based on field direction
     $('#leftTeamPosition').css({
-        'left': (offensePos - 58) + "px", 
+        'left': (offensePos - 58) + "px",
         'top': hashPosition + "px"
     });
     $('#rightTeamPosition').css({
-        'left': (offensePos - 26) + "px", 
+        'left': (offensePos - 26) + "px",
         'top': hashPosition + "px"
     });
     setScoreboard();
@@ -441,27 +438,29 @@ function kickOffSetup(){
     setFieldPlayers();
     if(rotate){
         $('#leftTeamPosition').css({
-            'left': (firstDownPosition - 58) + "px", 
+            'left': (firstDownPosition - 58) + "px",
             'top': "175px"
         });
 
         $('#rightTeamPosition').css({
-            'left': (lineOfScrimmage - 26) + "px", 
+            'left': (lineOfScrimmage - 26) + "px",
             'top': "175px"
         });
     }
     else{
         $('#leftTeamPosition').css({
-            'left': (lineOfScrimmage - 58) + "px", 
+            'left': (lineOfScrimmage - 58) + "px",
             'top': "175px"
         });
 
         $('#rightTeamPosition').css({
-            'left': (firstDownPosition - 26) + "px", 
+            'left': (firstDownPosition - 26) + "px",
             'top': "175px"
         });
     }
     setBallHolder();
+    var kicker = localStorage.getItem("currentOffense");
+    setNextStep(kicker + " — roll the bead (kickoff)");
 }
 
 function setFieldPlayers() {
@@ -545,6 +544,9 @@ function addPoints(team, points) {
         $('#points-modal').modal('show')
     }, 1500);
     setScoreboard();
+    if(points == 6){
+        setNextStep(team + " scored a TD — choose PAT or 2-pt conversion");
+    }
 }
 
 $("#twoPTSetup").click(function() {
@@ -561,6 +563,7 @@ $("#twoPTSetup").click(function() {
         setAllPositions(2, 0, "C");
     }
     setScoreboard();
+    setNextStep(localStorage.getItem("currentOffense") + " — call offense for 2-pt conversion, then roll bead");
 });
 
 $("#fieldGoalSetup").click(function() {
@@ -577,4 +580,5 @@ $("#fieldGoalSetup").click(function() {
         setAllPositions(2, 0, "C");
     }
     setScoreboard();
+    setNextStep(localStorage.getItem("currentOffense") + " — roll the bead (PAT kick)");
 });

@@ -298,6 +298,7 @@ this is only for my offense creator
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
 }
 
+
 #lineOfScrimmage{
   background-color: transparent;
   border-right: 4px solid blue; 
@@ -487,4 +488,70 @@ this is only for my offense creator
 }
 #fieldGoalSetup{
     margin:0 auto;
+}
+
+/* Quick test play button */
+#quick-test-play {
+    display: block;
+    margin-top: 6px;
+    width: 100%;
+}
+
+/* Play outcome display */
+#outcome-divider {
+    margin: 8px 0 6px 0;
+    border-top: 1px solid #ccc;
+}
+#outcome-display {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #222;
+    margin: 0;
+    min-height: 1.4em;
+}
+
+/* Play list tag grouping */
+.play-tag-game {
+    background-color: #f0fff0;
+    color: #1a4a1a;
+}
+.play-tag-test {
+    background-color: #fff8e1;
+    color: #6b4c00;
+    font-style: italic;
+}
+.play-tag-game:hover, .play-tag-game:checked {
+    background-color: lightgreen !important;
+}
+.play-tag-test:hover, .play-tag-test:checked {
+    background-color: #ffe082 !important;
+}
+/* type sub-headers under Game tag get normal style */
+optgroup.type-group-game {
+    color: #333;
+    font-weight: bold;
+}
+/* type sub-headers under Test tag get muted yellow style */
+optgroup.type-group-test {
+    color: #8a6200;
+    font-weight: bold;
+}
+
+/* Next Step indicator in navbar */
+#next-step-bar {
+    float: right;
+    margin-right: 15px;
+    line-height: 50px;
+    font-size: 0.95em;
+}
+#next-step-label {
+    color: #aaa;
+    font-weight: bold;
+    margin-right: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+#next-step-text {
+    color: #ffd400;
+    font-weight: bold;
 }

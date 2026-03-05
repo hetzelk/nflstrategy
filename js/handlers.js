@@ -19,6 +19,7 @@ $("#save-settings").click(function() {
     }
     else{
         $('#coin-flip-modal').modal('show');
+        setNextStep("Flip the coin");
     }
     var home = $("#home-name").val();
     var away = $("#away-name").val();
@@ -56,6 +57,7 @@ function loadSettings() {
 
     $("#setup-game").css("display", localStorage.getItem("setupGame"));
     $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    $("#quick-test-play").css("display", localStorage.getItem("nextPlay"));
     setFieldPlayers();
     setScoreboard();
 }
@@ -84,6 +86,7 @@ $("#coin-flip-button").click(function() {
     document.getElementById("team-recieve-kick").innerHTML = winner;
     document.getElementById("team-left-right").innerHTML = loser;
     $("#secondary-coin-settings").fadeIn("slow");
+    setNextStep(winner + " — choose kick or receive");
   }
 });
 
@@ -113,6 +116,7 @@ $("#coin-flip-close").click(function() {
     localStorage.setItem("nextPlay", "block");
     $("#setup-game").css("display", localStorage.getItem("setupGame"));
     $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    $("#quick-test-play").css("display", localStorage.getItem("nextPlay"));
 
     //create base localStorage
     localStorage.setItem("time", "15:00");
@@ -144,15 +148,21 @@ $(function() {
     });
 });
 
+var BEAD_ANIMATION_MS = 1600; // must match total duration in setBeadPosition()
+
 function callRandomBead() {
     var bead = Math.floor((Math.random() * 100) + 1);
     var playType = localStorage.getItem("playType");
-    var beadNumber = determinePlayOutcome(playType, bead);
-    // Kick plays handle their own outcome internally and return null
-    if(beadNumber !== null && beadNumber !== undefined){
-        validateOutcome(beadNumber);
-    }
+    // Start the bead animation immediately
     setBeadPosition(bead);
+    // Wait for the bead to finish moving before updating the field
+    setTimeout(function() {
+        var beadNumber = determinePlayOutcome(playType, bead);
+        // Kick plays handle their own outcome internally and return null
+        if(beadNumber !== null && beadNumber !== undefined){
+            validateOutcome(beadNumber);
+        }
+    }, BEAD_ANIMATION_MS);
 }
 
 $("#make-correction").click(function() {
@@ -203,6 +213,7 @@ $("#example-setup").click(function() {
     localStorage.setItem("nextPlay", "block");
     $("#setup-game").css("display", localStorage.getItem("setupGame"));
     $("#next-play").css("display", localStorage.getItem("nextPlay"));
+    $("#quick-test-play").css("display", localStorage.getItem("nextPlay"));
 
     //create base localStorage
     localStorage.setItem("home", "HomeRed");
@@ -228,6 +239,33 @@ $("#example-setup").click(function() {
     setTouchDowns();
     localStorage.setItem("playType", "kickOff");
     kickOffSetup();
+    setNextStep("AwayBlue — roll the bead (kickoff)");
+});
+
+// Quick Test Play button — picks a random Game-tagged offense + any non-Kick defense automatically
+$("#quick-test-play").click(function() {
+    var testOffensePlays = offense.filter(function(p){ return p.tag === "Game" && p.type !== "Kick"; });
+    var testDefensePlays = defense.filter(function(p){ return p.type !== "Kick"; });
+
+    if(testOffensePlays.length === 0 || testDefensePlays.length === 0) {
+        alert("No test plays found.");
+        return;
+    }
+
+    var randOffense = testOffensePlays[Math.floor(Math.random() * testOffensePlays.length)];
+    var randDefense = testDefensePlays[Math.floor(Math.random() * testDefensePlays.length)];
+
+    localStorage.setItem("offensePlay", randOffense.id);
+    localStorage.setItem("defensePlay", randDefense.id);
+    localStorage.setItem("playType", "regular");
+
+    document.getElementById("offense-called").innerHTML = randOffense.name;
+    document.getElementById("defense-called").innerHTML = randDefense.name;
+    document.getElementById("outcome-display").innerHTML = "—";
+    $("#offense-called").removeClass("none");
+    $("#defense-called").removeClass("none");
+
+    setNextStep("Test plays set — roll the bead");
 });
 
 // Timeout buttons in offense/defense modals

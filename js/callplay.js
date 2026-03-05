@@ -1,48 +1,55 @@
-$(".offense-choice").hover(function() {
-    var hoveredItem = $(event.target).attr("id");
+$(document).on("mouseover", ".offense-choice", function() {
+    var hoveredItem = $(this).attr("id");
     $(this).css("font-weight", "500");
     var result = returnPlayId(offense, hoveredItem);
+    if(!result) return;
     var plays = result.name + "<br>" + result.type + "<br>" + result.desc;
     document.getElementById("preview-offense-play").innerHTML = plays;
     $("#show-offense-play").addClass("none");
-    }, 
-    function(){
+});
+$(document).on("mouseout", ".offense-choice", function() {
     $(this).css("font-weight", "normal");
     document.getElementById("preview-offense-play").innerHTML = "";
     $("#show-offense-play").removeClass("none");
-  }
-);
+});
 
-$(".defense-choice").hover(function() {
-    var hoveredItem = $(event.target).attr("id");
+$(document).on("mouseover", ".defense-choice", function() {
+    var hoveredItem = $(this).attr("id");
     $(this).css("font-weight", "500");
     var result = returnPlayId(defense, hoveredItem);
+    if(!result) return;
     var plays = result.name + "<br>" + result.type + "<br>" + result.desc;
     document.getElementById("preview-defense-play").innerHTML = plays;
     $("#show-defense-play").addClass("none");
-    }, 
-    function(){
+});
+$(document).on("mouseout", ".defense-choice", function() {
     $(this).css("font-weight", "normal");
     document.getElementById("preview-defense-play").innerHTML = "";
     $("#show-defense-play").removeClass("none");
-  }
-);
+});
 
-$(".offense-choice").click(function() {
-    var clickedItem = $(event.target).attr("id");
+$(document).on("click", ".offense-choice", function() {
+    var clickedItem = $(this).attr("id");
     var result = returnPlayId(offense, clickedItem);
-    var plays =  result.name + "<br>" + result.type + "<br>" + result.desc;
+    if(!result) return;
+    var plays = result.name + "<br>" + result.type + "<br>" + result.desc;
 
     document.getElementById("offense-called").innerHTML = result.name;
     document.getElementById("show-offense-play").innerHTML = plays;
+    document.getElementById("outcome-display").innerHTML = "—";
     $("#offense-continue").removeClass("disabled");
     localStorage.setItem("offensePlay", result.id);
+    var defTeam = localStorage.getItem("currentOffense") == localStorage.getItem("home")
+        ? localStorage.getItem("away")
+        : localStorage.getItem("home");
+    setNextStep(defTeam + " — call your defense");
 });
 
-$(".defense-choice").click(function() {
-    var clickedItem = $(event.target).attr("id");
+$(document).on("click", ".defense-choice", function() {
+    var clickedItem = $(this).attr("id");
     var result = returnPlayId(defense, clickedItem);
-    var plays =  result.name + "<br>" + result.type + "<br>" + result.desc;
+    if(!result) return;
+    var plays = result.name + "<br>" + result.type + "<br>" + result.desc;
 
     document.getElementById("defense-called").innerHTML = result.name;
     document.getElementById("show-defense-play").innerHTML = plays;
@@ -52,6 +59,7 @@ $(".defense-choice").click(function() {
     localStorage.setItem("defensePlay", result.id);
     document.getElementById("next-play").innerHTML = "Next Play";
     localStorage.setItem("playType", "regular");
+    setNextStep("Both plays called — roll the bead");
 });
 
 $("#next-play").click(function() {
@@ -225,6 +233,11 @@ function handleKickAttempt(playType, bead) {
 
     document.getElementById("outcome-display").innerHTML = msg;
     deductPlayTime(false);
+    if(made){
+        setNextStep(localStorage.getItem("currentOffense") + " — roll the bead (kickoff)");
+    } else {
+        setNextStep(localStorage.getItem("currentOffense") + " — call your offense");
+    }
 }
 
 /*
@@ -277,6 +290,7 @@ function handleKickoff(bead) {
     setBallHolder();
     document.getElementById("outcome-display").innerHTML = msg;
     deductPlayTime(false);
+    setNextStep(receivingTeam + " — call your offense");
 }
 
 /*
@@ -342,25 +356,49 @@ function handlePunt(bead) {
     setBallHolder();
     document.getElementById("outcome-display").innerHTML = msg;
     deductPlayTime(false);
+    setNextStep(localStorage.getItem("currentOffense") + " — call your offense");
 }
 
 function displayOutcome(outcome) {
-    document.getElementById("outcome-display").innerHTML = "Remember to adjust for the yards if a touchdown is scored " + outcome;
     var fieldPositions = (localStorage.getItem("fieldPositions")).split(",");
     var hashPosition = fieldPositions[2];
     var hashPlay = "";
     var outcomes = ((outcome.split(":"))[1]).split(",");
-    if(hashPosition == "L"){
+    if(hashPosition == "C"){
         hashPlay = outcomes[0];
     }
-    else if (hashPosition == "C"){
+    else if (hashPosition == "L"){
         hashPlay = outcomes[1];
     }
     else{
         hashPlay = outcomes[2];
     }
-    hashPosition = hashPlay.slice(0, 1);
+    var newHash = hashPlay.slice(0, 1);
     var yards = hashPlay.slice(1);
 
-    fieldOutcome(yards, hashPosition);
+    // Build a clean result message
+    var rawYards = yards.replace(/[fi]/g, "");
+    var isFumble = yards.includes("f");
+    var isInt = yards.includes("i");
+    var yardNum = parseInt(rawYards);
+    var resultMsg = "";
+
+    if(isInt){
+        resultMsg = "⚡ INTERCEPTION";
+        if(yardNum !== 0) resultMsg += " — returned " + Math.abs(yardNum) + " yds";
+    } else if(isFumble){
+        resultMsg = "💥 FUMBLE";
+        if(yardNum > 0) resultMsg += " — gained " + yardNum + " yds first";
+        else if(yardNum < 0) resultMsg += " — lost " + Math.abs(yardNum) + " yds";
+    } else if(yardNum > 0){
+        resultMsg = "+" + yardNum + " yards";
+    } else if(yardNum === 0){
+        resultMsg = "No gain";
+    } else {
+        resultMsg = yardNum + " yards (loss)";
+    }
+
+    fieldOutcome(yards, newHash);
+    document.getElementById("outcome-display").innerHTML = resultMsg;
+    setNextStep(localStorage.getItem("currentOffense") + " — call your offense");
 }
