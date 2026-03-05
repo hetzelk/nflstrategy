@@ -398,7 +398,13 @@ function displayOutcome(outcome) {
         resultMsg = yardNum + " yards (loss)";
     }
 
+    var prevDown = parseInt(localStorage.getItem("down"));
     fieldOutcome(yards, newHash);
+    // If down reset to 1 and it wasn't a turnover, a first down was earned
+    var newDown = parseInt(localStorage.getItem("down"));
+    if(!isFumble && !isInt && newDown === 1 && prevDown !== 1){
+        resultMsg = "🟡 FIRST DOWN! " + resultMsg;
+    }
     document.getElementById("outcome-display").innerHTML = resultMsg;
     setNextStep(localStorage.getItem("currentOffense") + " — call your offense");
 }

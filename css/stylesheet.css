@@ -180,6 +180,7 @@ this is only for my offense creator
 .fieldOutline{
   border: 10px solid white;
   outline: 5px solid black;
+  position: relative;
 }
 
 .fieldNumberRight{
@@ -551,6 +552,26 @@ optgroup.type-group-game {
 optgroup.type-group-test {
     color: #8a6200;
     font-weight: bold;
+}
+
+/* First down flash overlay on the field */
+#first-down-flash {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    background-color: rgba(255, 220, 0, 0.92);
+    color: #1a1a00;
+    font-size: 2.2em;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 8px;
+    border: 3px solid #b8900a;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
 }
 
 /* Next Step indicator in navbar */

@@ -252,6 +252,9 @@ function fieldOutcome(yards, hashPosition) {
             finalFirstDown = 0;
         }
     }
+    // Detect whether a first down was earned (not a turnover, down reset to 1)
+    var earnedFirstDown = (down === 1 && !fumble && !interception);
+
     if(fumble || interception){
         quote += "turnover : yards " + yards;
         console.log(quote);
@@ -276,7 +279,7 @@ function fieldOutcome(yards, hashPosition) {
     localStorage.setItem("ballon", finalLOS);
     localStorage.setItem("togo", togo);
     localStorage.setItem("down", down);
-    setAllPositions(finalLOS, finalFirstDown, hashPosition);
+    setAllPositions(finalLOS, finalFirstDown, hashPosition, earnedFirstDown);
 
     // Deduct game clock. Incomplete passes (0 yards, no turnover, pass play) stop clock.
     var playType = localStorage.getItem("playType");
@@ -284,12 +287,12 @@ function fieldOutcome(yards, hashPosition) {
     deductPlayTime(incomplete);
 }
 
-function setAllPositions(offenseYds, firstYds, hashPosition) {
+function setAllPositions(offenseYds, firstYds, hashPosition, earnedFirstDown) {
     var offensePosition = getYardPosition(offenseYds);
     var firstDownPosition = getYardPosition(firstYds);
     if(hashPosition == "L"){
         hashPosition = 140;
-        
+
         if(localStorage.getItem("currentOffense") == localStorage.getItem("leftDirection")){
             hashPosition = 210;
         }
@@ -305,7 +308,7 @@ function setAllPositions(offenseYds, firstYds, hashPosition) {
         hashPosition = 175;
     }
 
-    setField(offensePosition, firstDownPosition, hashPosition);
+    setField(offensePosition, firstDownPosition, hashPosition, earnedFirstDown);
 }
 
 function getYardPosition(yard) {
@@ -319,24 +322,39 @@ function getYardPosition(yard) {
     return position;
 }
 
-function setField(offensePos, firstDownPos, hashPosition) {
-    //TODO add animations here
-    $('#lineOfScrimmage').css({
-        'left': offensePos + "px"
-    });
-    $('#firstDownPosition').css({
-        'left': firstDownPos + "px"
-    });
+function setField(offensePos, firstDownPos, hashPosition, earnedFirstDown) {
+    if(earnedFirstDown){
+        // Show first-down flash, then animate markers sliding to new spots
+        var $flash = $('#first-down-flash');
+        $flash.stop(true, true).fadeIn(200, function() {
+            setTimeout(function() {
+                $flash.fadeOut(400);
+            }, 900);
+        });
 
-    //need to add more logic here based on field direction
-    $('#leftTeamPosition').css({
-        'left': (offensePos - 58) + "px",
-        'top': hashPosition + "px"
-    });
-    $('#rightTeamPosition').css({
-        'left': (offensePos - 26) + "px",
-        'top': hashPosition + "px"
-    });
+        var SLIDE_MS = 500;
+        $('#lineOfScrimmage').animate({ 'left': offensePos + "px" }, SLIDE_MS);
+        $('#firstDownPosition').animate({ 'left': firstDownPos + "px" }, SLIDE_MS);
+        $('#leftTeamPosition').animate({
+            'left': (offensePos - 58) + "px",
+            'top': hashPosition + "px"
+        }, SLIDE_MS);
+        $('#rightTeamPosition').animate({
+            'left': (offensePos - 26) + "px",
+            'top': hashPosition + "px"
+        }, SLIDE_MS);
+    } else {
+        $('#lineOfScrimmage').css({ 'left': offensePos + "px" });
+        $('#firstDownPosition').css({ 'left': firstDownPos + "px" });
+        $('#leftTeamPosition').css({
+            'left': (offensePos - 58) + "px",
+            'top': hashPosition + "px"
+        });
+        $('#rightTeamPosition').css({
+            'left': (offensePos - 26) + "px",
+            'top': hashPosition + "px"
+        });
+    }
     setScoreboard();
 }
 
